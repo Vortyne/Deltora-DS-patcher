@@ -1,0 +1,68 @@
+name: Bug report
+description: Something in the patched game doesn't work, crashes or looks wrong.
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. A save file or save state from just before the problem helps most: it lets us see exactly what you saw.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What went wrong, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to make it happen
+      description: The steps leading up to it, as far as you know.
+      placeholder: |
+        1. Go to the Lake of Tears
+        2. Talk to Jasmine
+        3. ...
+  - type: input
+    id: where
+    attributes:
+      label: Where in the game
+      description: The chapter and area, or the menu you were in.
+      placeholder: "Chapter 2, Lake of Tears"
+  - type: textarea
+    id: save
+    attributes:
+      label: Save file or save state
+      description: |
+        Please attach your save file (`.sav`, next to the ROM) or a save state from just before the problem. GitHub only accepts some file types, so put the file in a `.zip` first, then drag the zip into this box.
+      placeholder: Drag a .zip of your save file or save state here.
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or video
+      description: Optional. Drag them into this box.
+  - type: input
+    id: version
+    attributes:
+      label: Patch version
+      description: Shown at the bottom left of the title screen, such as "English patch v1.0".
+      placeholder: "1.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: playing_on
+    attributes:
+      label: Playing on
+      options:
+        - melonDS
+        - DeSmuME
+        - A real DS or 3DS
+        - Another emulator
+    validations:
+      required: true
+  - type: input
+    id: emulator_version
+    attributes:
+      label: Emulator version
+      description: Optional, if you're using an emulator.
+      placeholder: "melonDS 1.1"

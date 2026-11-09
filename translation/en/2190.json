@@ -1,0 +1,23 @@
+{
+"0": "Why, a traveller. You've come at a good time.\fMonsters have started appearing in my fields.\fI'm about to sow my seeds, so I'd like you to guard the fields…\fWill you do it?",
+"1": "Thank you. Then I'll start sowing.",
+"2": "No?\fYou say no?\fThen I won't sow any seeds.",
+"3": "Sprout up quick, hey hop-hop!\fIn a day, up you pop!\fNow remember what time it is, hey!",
+"4": "Lovely weather today.\f…Hm?\fNothing out of the ordinary.",
+"5": "Oh no, monsters have appeared!\fHurry and get rid of them, or my fields… m-my fields!\fThey're at the far end. Go find them!",
+"6": "Well done. Are you hurt?\fNow my Grand Farm will have a good harvest.",
+"7": "My fields are ruined.\fYou said you'd protect them…",
+"8": "Well done. Thank you, as always.\fThanks to you, we've got a bumper crop!\fPlease take this.",
+"9": "You got {fff7}10{fffc} {fff8}Wheat{fffc}!!",
+"10": "You got {fff7}10{fffc} {fff8}Pumpkins{fffc}!!",
+"11": "You got {fff7}10{fffc} {fff8}Hibiscus{fffc}!!",
+"12": "You've been a great help. A real help.\fI'm counting on you next time too.",
+"13": "Return to the World Map?",
+"14": "Status: {fff7}{fff5}",
+"15": "Left: {fff8}{fff5}",
+"16": "Woof woof.",
+"17": "It takes time for crops to grow!\fYou can always come back when some time has passed.\nCheck the Cards menu to see the farm's current status!",
+"18": "What should I plant?\n{fff8}Wheat{fffc}   Pumpkins   Hibiscus",
+"19": "What should I plant?\nWheat   {fff8}Pumpkins{fffc}   Hibiscus",
+"20": "What should I plant?\nWheat   Pumpkins   {fff8}Hibiscus{fffc}"
+}

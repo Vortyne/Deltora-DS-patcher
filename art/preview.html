@@ -1,0 +1,38 @@
+<!doctype html>
+<!-- The link preview card (docs/preview.png, 1200 x 630): python art/render_images.py -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Cinzel:wght@800&display=block">
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #0a0c10; }
+  body { position: relative; font-family: system-ui, "Segoe UI", sans-serif; color: #e6eef5; }
+  .hero { position: absolute; left: -10px; top: -55px; width: 740px; height: 740px; }
+  .hero img { width: 100%; height: 100%; }
+  h1 { position: absolute; inset: 0; margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center;
+       font-family: "Cinzel Decorative", Georgia, serif; font-weight: 900; line-height: 1; }
+  h1 span {
+    background: linear-gradient(#fffbe0 0%, #ffe27a 30%, #ffb52e 58%, #e8700c 80%, #a83c04 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(1.5px 0 0 #3a1a04) drop-shadow(-1.5px 0 0 #3a1a04) drop-shadow(0 1.5px 0 #3a1a04) drop-shadow(0 -1.5px 0 #3a1a04)
+            drop-shadow(0 3px 0 #2a1102) drop-shadow(0 0 8px rgba(20, 8, 0, 0.9));
+  }
+  .name { font-size: 67px; }
+  .what { font-family: "Cinzel", Georgia, serif; font-size: 41px; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 8px; }
+  .side { position: absolute; left: 730px; right: 60px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+  .side p { margin: 0; }
+  .lead { font-size: 40px; line-height: 1.2; font-weight: 600; }
+  .sub { font-size: 25px; line-height: 1.4; color: #8d9aa8; }
+  .sub i { color: #b9c6d3; }
+  .tag { color: #5cc8ff; font-size: 22px; font-weight: 600; letter-spacing: 0.02em; }
+</style>
+</head>
+<body>
+  <div class="hero"><img src="../docs/gems.svg" alt=""><h1><span class="name">Deltora DS</span><span class="what">Patcher</span></h1></div>
+  <div class="side">
+    <p class="lead">Deltora Quest DS, in English</p>
+    <p class="sub">Translates <i>Deltora Quest: Nanatsu no Houseki</i> and adds full button controls.</p>
+    <p class="tag">Patch your own ROM in the browser</p>
+  </div>
+</body>
+</html>

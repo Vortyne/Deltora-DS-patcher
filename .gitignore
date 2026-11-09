@@ -1,0 +1,8 @@
+# never commit the game or anything taken from it
+*.nds
+*.sav
+*.dsv
+work/
+out/
+__pycache__/
+*.pyc

@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deltora DS Patcher</title>
+<meta name="description" content="Translates Deltora Quest: Nanatsu no Houseki to English and adds full button controls. Patch your own Japanese ROM in the browser.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0a0c10">
+<!-- the link preview on Discord, social sites and chat apps -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Deltora DS Patcher">
+<meta property="og:title" content="Deltora DS Patcher">
+<meta property="og:description" content="Translates Deltora Quest: Nanatsu no Houseki to English and adds full button controls. Patch your own Japanese ROM in the browser.">
+<meta property="og:url" content="https://vortyne.github.io/Deltora-DS-patcher/">
+<meta property="og:image" content="https://vortyne.github.io/Deltora-DS-patcher/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The seven gems of Deltora on a ring of light, around the Deltora DS Patcher logo">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Cinzel:wght@800&display=swap">
+<style>
+  /* always dark, in the light blue of the art's halo */
+  :root {
+    color-scheme: dark;
+    --bg: #0a0c10;
+    --panel: #12161d;
+    --ink: #e6eef5;
+    --muted: #8d9aa8;
+    --line: #26303c;
+    --accent: #5cc8ff;
+    --accent-ink: #04131d;
+    --accent-hover: #8fdaff;
+    --accent-soft: rgba(92, 200, 255, 0.1);
+    --done: #6fd68a;
+    --error: #ff8a7a;
+    --active: #d6f4ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 48px 16px;
+  }
+  main { width: 100%; max-width: 660px; text-align: center; }     /* room for the note on one line */
+  /* the gems' ring with the title in its middle; the ring's dark edges overlap what's around it */
+  .hero { --art: min(660px, 98vw); position: relative; width: var(--art); margin: -60px auto -70px; pointer-events: none; }   /* clicks pass through to what it overlaps */
+  .art { display: block; width: 100%; height: auto; pointer-events: none; }
+  /* gold letters with a dark rim, like the game's own logo */
+  h1 {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "Cinzel Decorative", "Cinzel", Georgia, serif;
+    font-weight: 900;
+    line-height: 1;
+    pointer-events: none;
+  }
+  h1 span {
+    background: linear-gradient(#fffbe0 0%, #ffe27a 30%, #ffb52e 58%, #e8700c 80%, #a83c04 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* the dark rim is drawn round the outside of the letters by four 1px shadows (a text stroke
+       would cut into them and trace the font's overlapping outlines), then a drop and a soft shade */
+    filter: drop-shadow(1px 0 0 #3a1a04) drop-shadow(-1px 0 0 #3a1a04) drop-shadow(0 1px 0 #3a1a04) drop-shadow(0 -1px 0 #3a1a04)
+            drop-shadow(0 2px 0 #2a1102) drop-shadow(0 0 6px rgba(20, 8, 0, 0.9));
+  }
+  h1 .name { font-size: calc(var(--art) * 0.09); letter-spacing: 0.01em; }
+  /* full capitals: Cinzel's lower case is small capitals, which sat in the gradient's dark end */
+  h1 .what { font-family: "Cinzel", Georgia, serif; font-size: calc(var(--art) * 0.056); text-transform: uppercase; margin-top: calc(var(--art) * 0.01); letter-spacing: 0.04em; }
+  .subtitle { color: var(--muted); font-size: 1.1rem; margin: 0 0 40px; }
+  .more { display: inline-block; margin-top: 6px; color: var(--accent); font-size: 1rem; }
+  .more:hover { color: var(--accent-hover); }
+  .big {
+    appearance: none;
+    border: 0;
+    border-radius: 12px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font: 600 1.35rem/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: 22px 64px;
+    cursor: pointer;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+  }
+  .big:hover { background: var(--accent-hover); }
+  .big:focus-visible { outline: 3px solid var(--active); outline-offset: 3px; }
+  .note { color: var(--muted); font-size: 0.9rem; margin: 14px 0 0; }
+  ol.steps {
+    list-style: none;
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: left;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+  ol.steps li { padding: 8px; border-top: 1px solid var(--line); }
+  ol.steps li:first-child { border-top: 0; }
+  ol.steps li[hidden] { display: none; }
+  /* each step is a button: step 1 takes the ROM (a click or a drop), step 2 saves the result */
+  .step {
+    appearance: none;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    width: 100%;
+    padding: 12px 10px;
+    border: 2px dashed var(--accent);
+    border-radius: 10px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .step:hover:not(:disabled), .step.over { background: var(--accent-soft); border-style: solid; }
+  .step:focus-visible { outline: 3px solid var(--active); outline-offset: 2px; }
+  .step:disabled { border-color: transparent; cursor: default; }
+  .mark {
+    flex: 0 0 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--line);
+    color: var(--muted);
+    display: grid;
+    place-items: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+  .mark[hidden] { display: none; }
+  .step-text { padding-top: 2px; min-width: 0; }
+  .step-title { font-weight: 600; }
+  #step-select .step-title { font-size: 1.3rem; line-height: 1.3; }
+  #pick { justify-content: center; align-items: center; text-align: center; }    /* the drop zone, centred */
+  #pick .sums { justify-content: center; text-align: left; }
+  .step-detail { color: var(--muted); font-size: 0.9rem; overflow-wrap: anywhere; }
+  #step-select .step-detail { display: block; white-space: pre-line; }   /* under the title, its own lines */
+  .sums { margin: 6px 0 0; font-size: 0.85rem; color: var(--muted); display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; }
+  .sums[hidden] { display: none; }
+  .sums dt { margin: 0; }
+  .sums dd { margin: 0; font-family: ui-monospace, Consolas, monospace; overflow-wrap: anywhere; }
+  .sums .ok { color: var(--done); font-family: inherit; font-weight: 600; }
+  li#step-save { padding: 20px 16px; text-align: center; }
+  li#step-save .step-detail { display: block; margin-top: 10px; }
+  li#step-save.done .step-detail { color: var(--done); }
+  li.active .mark { border-color: var(--active); color: var(--active); }
+  li.done .mark { border-color: var(--done); background: var(--done); color: var(--panel); }
+  li.error .mark { border-color: var(--error); background: var(--error); color: var(--panel); }
+  li.error .step-detail { color: var(--error); }
+  footer { color: var(--muted); font-size: 0.85rem; margin-top: 40px; }
+  footer a, .note a { color: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <div class="hero">
+    <img class="art" src="gems.svg" width="760" height="760" alt="">
+    <h1><span class="name">Deltora DS</span><span class="what">Patcher</span></h1>
+  </div>
+  <p class="subtitle">Translates the game to English and adds full button controls.<br><a class="more" href="changes.html">What else was changed?</a></p>
+
+  <button id="download" class="big" type="button">Download</button>
+  <ol class="steps" aria-live="polite" hidden>
+    <li id="step-select">
+      <button id="pick" class="step" type="button"><span class="mark" hidden></span><span class="step-text"><span class="step-title">Select your ROM file</span><span class="step-detail"></span>
+        <dl class="sums" hidden><dt id="sum-yours-label">Your file</dt><dd id="sum-yours"></dd><dt id="sum-correct-label">Correct ROM</dt><dd id="sum-correct"></dd></dl></span></button>
+    </li>
+    <li id="step-save" hidden>
+      <button id="save" class="big" type="button">Download patched game</button>
+      <span class="step-detail"></span>
+    </li>
+  </ol>
+  <p class="note">Patching happens in your browser, nothing is uploaded, no original game data is hosted on this site.</p>
+  <p class="note"><span id="version">The latest version</span> · <a href="https://github.com/Vortyne/Deltora-DS-patcher/releases">All releases</a> · <a href="translation.html">Review the translation</a></p>
+  <input id="rom" type="file" accept=".nds,application/octet-stream" hidden>
+
+  <footer>Patches <i>Deltora Quest: Nanatsu no Houseki</i> (Japan). Source and build instructions on <a href="https://github.com/Vortyne/Deltora-DS-patcher">GitHub</a>.</footer>
+</main>
+
+<script src="bps.js"></script>
+<script>
+"use strict";
+const BASE_SHA1 = "5a28815f68e78e2da5b486951a158a374150e459";   // the original Japanese ROM
+// The site's deploy (.github/workflows/pages.yml) copies the release's patch here, next to
+// version_number.txt, which names it.
+const PATCH_NAME = version => `Deltora_Quest_DS_english_patch_full_button_control_v${version}.bps`;
+const OUT_NAME = version => `Deltora_Quest_DS_english_patch_full_button_control_v${version}.nds`;   // the patched game
+const ROM_NAME = "Deltora Quest - Nanatsu no Houseki (Japan).nds";     // the Japanese ROM's standard file name
+const PICK_HINT = `${ROM_NAME}
+click to choose it, or drop it here`;
+
+let versionNumber = null;
+async function version() {
+  if (versionNumber === null) {
+    const response = await fetch("version_number.txt", { cache: "no-cache" });
+    if (!response.ok) throw new Error(response.status);
+    versionNumber = (await response.text()).trim();
+  }
+  return versionNumber;
+}
+version().then(v => { document.getElementById("version").textContent = `Patch v${v}`; }).catch(() => {});
+
+const button = document.getElementById("download");
+const steps = document.querySelector("ol.steps");
+const pick = document.getElementById("pick");
+const saveButton = document.getElementById("save");
+const sums = document.querySelector(".sums");
+const input = document.getElementById("rom");
+let english = null;         // the patched game, once made
+// the file name and its size, as the save step shows them
+const savedName = () => `${OUT_NAME(versionNumber)} (${Math.round(english.length / 1048576)} MB)`;
+
+function setStep(id, state, detail = "") {
+  const li = document.getElementById(id);
+  li.className = state;
+  const mark = li.querySelector(".mark");
+  if (mark) {          // no step number: only a tick or a warning, once there's an outcome
+    mark.hidden = state !== "done" && state !== "error";
+    mark.textContent = state === "done" ? "✓" : "!";
+  }
+  li.querySelector(".step-detail").textContent = detail;
+}
+
+// a moment for the step's new state to show before the long work (not requestAnimationFrame,
+// which never fires while the tab is in the background)
+const nextFrame = () => new Promise(r => setTimeout(r, 30));
+
+async function sha1(bytes) {
+  const digest = await crypto.subtle.digest("SHA-1", bytes);
+  return Array.from(new Uint8Array(digest), b => b.toString(16).padStart(2, "0")).join("");
+}
+
+// The checksums under step 1: the file's and, for a wrong file, the correct one beside it
+function showSums(hash, correct) {
+  document.getElementById("sum-yours-label").textContent = correct ? "Checksum" : "Your file";
+  const yours = document.getElementById("sum-yours");
+  yours.textContent = hash;
+  if (correct) {
+    const ok = document.createElement("span");
+    ok.className = "ok";
+    ok.textContent = " ✓";
+    yours.appendChild(ok);
+  }
+  for (const id of ["sum-correct-label", "sum-correct"]) document.getElementById(id).hidden = correct;
+  document.getElementById("sum-correct").textContent = BASE_SHA1;
+  sums.hidden = false;
+}
+
+class WrongRom extends Error {
+  constructor(hash) { super("This is not the correct ROM file"); this.hash = hash; }
+}
+
+// Check the ROM and patch it: the English game, or an error. Kept apart from the page so it can
+// be tested on its own.
+async function patchRom(romBytes, progress = () => {}) {
+  progress("checking…");
+  await nextFrame();
+  const hash = await sha1(romBytes);
+  if (hash !== BASE_SHA1) throw new WrongRom(hash);
+  progress("downloading the patch…", hash);
+  let patch;
+  try {
+    const response = await fetch(PATCH_NAME(await version()));
+    if (!response.ok) throw new Error(response.status);
+    patch = new Uint8Array(await response.arrayBuffer());
+  } catch (e) {
+    throw new Error("Couldn't download the patch. Check your connection and try again.");
+  }
+  progress("patching…");
+  await nextFrame();
+  return BPS.apply(romBytes, patch);
+}
+
+// Download shows the steps in its place. Step 1 takes the ROM, by the file selector or a drop;
+// it's checked and patched as soon as it arrives, and step 2 then appears to save the result.
+button.addEventListener("click", () => {
+  button.hidden = true;
+  steps.hidden = false;
+  setStep("step-select", "active", PICK_HINT);
+  pick.focus();
+});
+
+pick.addEventListener("click", () => {
+  input.value = "";
+  input.click();
+});
+input.addEventListener("change", () => { if (input.files[0]) run(input.files[0]); });
+
+pick.addEventListener("dragenter", e => { e.preventDefault(); if (!pick.disabled) pick.classList.add("over"); });
+pick.addEventListener("dragover", e => { e.preventDefault(); e.dataTransfer.dropEffect = pick.disabled ? "none" : "copy"; });
+pick.addEventListener("dragleave", e => { if (!pick.contains(e.relatedTarget)) pick.classList.remove("over"); });
+pick.addEventListener("drop", e => {
+  e.preventDefault();
+  pick.classList.remove("over");
+  const file = e.dataTransfer.files[0];
+  if (file && !pick.disabled) run(file);
+});
+// a file dropped anywhere else mustn't make the browser open it in place of the page
+window.addEventListener("dragover", e => e.preventDefault());
+window.addEventListener("drop", e => e.preventDefault());
+
+async function run(file) {
+  english = null;
+  document.getElementById("step-save").hidden = true;
+  sums.hidden = true;
+  pick.disabled = true;
+  try {
+    const rom = new Uint8Array(await file.arrayBuffer());
+    english = await patchRom(rom, (text, hash) => {
+      setStep("step-select", "active", `${file.name}: ${text}`);
+      if (hash) showSums(hash, true);             // the right ROM: its checksum, ticked
+    });
+    setStep("step-select", "done", file.name);
+    setStep("step-save", "active", savedName());
+    document.getElementById("step-save").hidden = false;
+    saveButton.disabled = false;
+    saveButton.focus();
+  } catch (e) {
+    setStep("step-select", "error", `${e.message}. Choose another file, or drop it here.`);
+    if (e instanceof WrongRom) showSums(e.hash, false);
+  } finally {
+    pick.disabled = false;
+  }
+}
+
+saveButton.addEventListener("click", () => {
+  if (!english) return;
+  const url = URL.createObjectURL(new Blob([english], { type: "application/octet-stream" }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = OUT_NAME(versionNumber);
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+  setStep("step-save", "done", "✓ Saved as " + savedName());
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Changed · Deltora DS Patcher</title>
+<meta name="description" content="Everything the English patch of Deltora Quest: Nanatsu no Houseki adds and changes, besides the translation and button controls.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0a0c10">
+<!-- the link preview on Discord, social sites and chat apps -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Deltora DS Patcher">
+<meta property="og:title" content="What Changed · Deltora DS Patcher">
+<meta property="og:description" content="Everything the English patch of Deltora Quest: Nanatsu no Houseki adds and changes, from button controls to the card book.">
+<meta property="og:url" content="https://vortyne.github.io/Deltora-DS-patcher/changes.html">
+<meta property="og:image" content="https://vortyne.github.io/Deltora-DS-patcher/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The seven gems of Deltora on a ring of light, around the Deltora DS Patcher logo">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Cinzel:wght@800&display=swap">
+<style>
+  /* the download page's colours: always dark, in the light blue of the art's halo */
+  :root {
+    color-scheme: dark;
+    --bg: #0a0c10;
+    --panel: #12161d;
+    --ink: #e6eef5;
+    --muted: #8d9aa8;
+    --line: #26303c;
+    --accent: #5cc8ff;
+    --accent-soft: rgba(92, 200, 255, 0.1);
+    --gold: #ffcf5a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: 32px 16px 64px;
+  }
+  main { max-width: 900px; margin: 0 auto; }
+  a { color: var(--accent); }
+  .back { display: inline-block; color: var(--muted); font-size: 0.9rem; text-decoration: none; margin-bottom: 18px; }
+  .back:hover { color: var(--ink); }
+  /* the logo's gold letters, on one line */
+  .logo {
+    margin: 0 0 6px;
+    font-family: "Cinzel Decorative", "Cinzel", Georgia, serif;
+    font-weight: 900;
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
+    line-height: 1.1;
+  }
+  .logo a { text-decoration: none; }
+  .logo span {
+    background: linear-gradient(#fffbe0 0%, #ffe27a 30%, #ffb52e 58%, #e8700c 80%, #a83c04 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(1px 0 0 #3a1a04) drop-shadow(-1px 0 0 #3a1a04) drop-shadow(0 1px 0 #3a1a04) drop-shadow(0 -1px 0 #3a1a04)
+            drop-shadow(0 2px 0 #2a1102);
+  }
+  /* as on the download page: plain Cinzel capitals, since the decorative font's H draws badly */
+  .logo .what { font-family: "Cinzel", Georgia, serif; text-transform: uppercase; font-size: 0.8em; letter-spacing: 0.04em; }
+  .lead { color: var(--muted); margin: 0 0 28px; font-size: 1.05rem; }
+
+  /* tabs: a row of buttons that wraps on narrow screens */
+  [role="tablist"] { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
+  [role="tab"] {
+    appearance: none;
+    border: 1px solid transparent;
+    border-bottom: 0;
+    border-radius: 10px 10px 0 0;
+    background: transparent;
+    color: var(--muted);
+    font: 600 0.98rem/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: 12px 16px;
+    margin-bottom: -1px;
+    cursor: pointer;
+  }
+  [role="tab"]:hover { color: var(--ink); background: var(--accent-soft); }
+  [role="tab"][aria-selected="true"] { color: var(--accent); background: var(--panel); border-color: var(--line); border-bottom: 1px solid var(--panel); }
+  [role="tab"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  [role="tabpanel"][hidden] { display: none; }
+
+  section h2 { font-size: 1.35rem; margin: 0 0 6px; }
+  section h3 { font-size: 1.05rem; margin: 26px 0 6px; color: var(--gold); }
+  section > p:first-of-type { color: var(--muted); margin-top: 0; }
+  ul { padding-left: 1.2em; margin: 6px 0; }
+  li { margin: 4px 0; }
+  kbd {
+    font: 600 0.8rem/1 ui-monospace, Consolas, monospace;
+    border: 1px solid var(--line);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    padding: 2px 6px;
+    background: var(--panel);
+  }
+  /* text beside its screenshots; the screenshots drop below on narrow screens */
+  .with-shots { display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: start; }
+  .shots { display: flex; flex-direction: column; gap: 14px; }
+  @media (max-width: 720px) {
+    .with-shots { grid-template-columns: 1fr; }
+    .shots { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  }
+  figure { margin: 0; width: 256px; max-width: 100%; }
+  figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    /* smooth scaling: the pictures are 2x and shown smaller, and "pixelated" would drop whole
+       columns of pixels when shrinking them to a size that isn't an exact half (letters lost strokes) */
+    border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+  figcaption { color: var(--muted); font-size: 0.85rem; margin-top: 6px; text-align: center; }
+  table { border-collapse: collapse; margin: 10px 0; }
+  th, td { text-align: left; padding: 6px 14px 6px 0; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 600; }
+  footer { color: var(--muted); font-size: 0.85rem; margin-top: 48px; border-top: 1px solid var(--line); padding-top: 16px; }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="./">← Back to the download</a>
+  <h1 class="logo"><a href="./"><span>Deltora DS</span> <span class="what">Patcher</span></a></h1>
+  <p class="lead">Everything the patch changes in <i>Deltora Quest: Nanatsu no Houseki</i>, besides the translation and the button controls.</p>
+
+  <div role="tablist" aria-label="Kinds of change">
+    <button role="tab" id="tab-translation" aria-controls="translation">Translation</button>
+    <button role="tab" id="tab-controls" aria-controls="controls">Controls</button>
+    <button role="tab" id="tab-cards" aria-controls="cards">Card book</button>
+    <button role="tab" id="tab-world" aria-controls="world">Map and completion</button>
+    <button role="tab" id="tab-life" aria-controls="life">Quality of life</button>
+    <button role="tab" id="tab-fixes" aria-controls="fixes">Fixes</button>
+  </div>
+
+  <section role="tabpanel" id="translation" aria-labelledby="tab-translation">
+    <div class="with-shots">
+      <div>
+        <h2>Translation</h2>
+        <p>The whole game is in English.</p>
+        <ul>
+          <li>The story, menus, items, cards, notes, help and credits. The only text left in Japanese is the developers' own debug menus.</li>
+          <li>Names follow Emily Rodda's books.</li>
+        </ul>
+        <h3>A new English font</h3>
+        <ul>
+          <li>Variable width, hand-drawn in the style of the game's own.</li>
+          <li>Two-letter glyphs, so long item and card names fit the game's fixed-length name fields.</li>
+        </ul>
+        <h3>Redrawn graphics</h3>
+        <ul>
+          <li>The title's subtitle, <i>The 7 Gems</i>, in the original fiery style.</li>
+          <li>The chapter and stage title cards.</li>
+          <li>Yes/No labels, menu labels and name plates.</li>
+          <li>Special move titles, the game over line and the title screen's copyright line.</li>
+        </ul>
+      </div>
+      <div class="shots">
+        <figure><img src="screenshots/dialogue_jasmine.png" width="512" height="768" alt="Jasmine telling Lief about item mixing"><figcaption>Jasmine at the Lake of Tears</figcaption></figure>
+        <figure><img src="screenshots/intro.png" width="512" height="768" alt="The opening story: Long ago, seven tribes lived in the land of Deltora"><figcaption>The opening story</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section role="tabpanel" id="controls" aria-labelledby="tab-controls" hidden>
+    <div class="with-shots">
+      <div>
+        <h2>Controls</h2>
+        <p>Everything that needed the stylus now also works with the D-pad and buttons. The stylus still works everywhere. A couple of small minigames still utilize only the stylus, or the DS microphone.</p>
+        <h3>In the field</h3>
+        <p>The original game is played with the stylus: tap to walk, tap an enemy to attack, and shout into the microphone for a special move. Every one of these now has a button.</p>
+        <table>
+          <tr><th>Button</th><th>What it does</th></tr>
+          <tr><td>D-pad</td><td>Walk, sliding along walls</td></tr>
+          <tr><td><kbd>B</kbd> held</td><td>Run</td></tr>
+          <tr><td><kbd>Y</kbd></td><td>Attack the nearest enemy</td></tr>
+          <tr><td><kbd>X</kbd> held</td><td>Charge, then release to dash-attack, where the game allows dash attacks</td></tr>
+          <tr><td><kbd>R</kbd> held</td><td>Special move, at a biorhythm peak, in place of shouting into the microphone</td></tr>
+          <tr><td><kbd>L</kbd></td><td>Use the item in the item square</td></tr>
+          <tr><td><kbd>Select</kbd></td><td>Switch to the next item</td></tr>
+          <tr><td><kbd>A</kbd></td><td>Talk, or open a chest</td></tr>
+          <tr><td><kbd>Start</kbd></td><td>Open the bag</td></tr>
+        </table>
+        <ul>
+          <li><b>Switching items:</b> in the original game, the item in the item square couldn't be changed at all. <kbd>Select</kbd> now brings the next item into the square, so items can be swapped mid-fight.</li>          <li><b>Talking:</b> <kbd>A</kbd> talks to whoever Lief is facing. When two people are in reach, the more useful one wins, such as the Grand Farm's farmer over his dog.</li>
+          <li><b>Walking:</b> some map collisions were adjusted so diagonal corridors don't snag.</li>
+        </ul>
+        <h3>Menus</h3>
+        <ul>
+          <li>A D-pad cursor in the bag, the item lists, the card book, the shop, the smith, the mixing room and the options.</li>
+          <li><kbd>L</kbd> and <kbd>R</kbd> switch tabs.</li>
+          <li>Every bag icon has a label.</li>
+        </ul>
+        <h3>Camp</h3>
+        <ul>
+          <li><kbd>X</kbd> saves, <kbd>Y</kbd> changes hero and <kbd>A</kbd> chooses.</li>        </ul>
+        <h3>Everywhere else</h3>
+        <ul>
+          <li>The world map: the D-pad moves between places.</li>
+          <li>Most minigames can be played with the buttons instead of just the stylus.</li>          <li><kbd>B</kbd> on the file screen returns to the title menu.</li>
+        </ul>
+      </div>
+      <div class="shots">
+        <figure><img src="screenshots/battle.png" width="512" height="768" alt="Lief attacking a snake, with damage numbers"><figcaption><kbd>Y</kbd> attacks the nearest enemy</figcaption></figure>
+        <figure><img src="screenshots/bag.png" width="512" height="768" alt="The bag, with labels under each icon"><figcaption>The bag, with labels</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section role="tabpanel" id="cards" aria-labelledby="tab-cards" hidden>
+    <div class="with-shots">
+      <div>
+        <h2>Card book</h2>
+        <p>Each enemy's card now says much more about it.</p>
+        <ul>
+          <li><b>Item Info</b> (<kbd>X</kbd>) lists the enemy's drops with their chances.</li>
+          <li><b>Detailed Info</b> gives its HP and where it's found, with the Tower of Illusion's variants marked.</li>
+          <li>Kill counts are kept for every enemy.</li>
+          <li>After the game is cleared, an unfound card shows where to find it.</li>
+          <li>The hexagon only animates when a new card was added.</li>
+        </ul>
+        <h3>Card drops</h3>
+        <p>In the original game every card was pure luck. Now each enemy's kill count decides it.</p>
+        <ul>
+          <li><b>Guaranteed cards:</b> from the 10th defeat of an enemy, it always drops its card until you have it. Before then, it can still drop at its normal chance.</li>
+          <li><b>Gold cards:</b> in the original game, when an enemy dropped a card you already owned, 1 time in 128 it was the gold version instead. Now no gold card is left to chance: defeat 50 of an enemy, with its card owned, and its card turns gold.</li>
+          <li>Once you have a card, it shows how many of that enemy you've defeated, so you can see how close its gold version is.</li>
+        </ul>
+        <h3>Item drops</h3>
+        <ul>
+          <li>Rare crafting materials and gear drop at least 6.25% of the time, so none takes hours of farming.</li>
+          <li>The Poncho drops at least 12.5% of the time.</li>
+        </ul>
+      </div>
+      <div class="shots">
+        <figure><img src="screenshots/card.png" width="512" height="768" alt="The Green Caterpillar's card, defeated 65 times"><figcaption>A card, with its kill count</figcaption></figure>
+        <figure><img src="screenshots/card_drops.png" width="512" height="768" alt="The Green Caterpillar's drops and their chances"><figcaption>Item Info: drops and chances</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section role="tabpanel" id="world" aria-labelledby="tab-world" hidden>
+    <div class="with-shots">
+      <div>
+        <h2>Map and completion</h2>
+        <p>The game keeps track of how much of it you've found.</p>
+        <h3>World map</h3>
+        <ul>
+          <li>After a chapter is cleared, its place shows how many chests are left there.</li>
+          <li>Once the game is cleared, the touch screen shows the completion percentage.</li>
+        </ul>
+        <h3>File screen</h3>
+        <ul>
+          <li>Each file shows its play time and completion percentage.</li>
+          <li>In the Tower of Illusion, it shows the floor, such as "Tower of Illusion 40F".</li>
+        </ul>
+        <h3>How completion is counted</h3>
+        <p>Each part counts in proportion, and the total rounds down.</p>
+        <table>
+          <tr><th>Part</th><th>Weight</th></tr>
+          <tr><td>Main chapters and the ending</td><td>50%</td></tr>
+          <tr><td>Cards</td><td>15%</td></tr>
+          <tr><td>Items, equipment, recipes, key items and chests</td><td>5% each</td></tr>
+          <tr><td>Clearing the Tower of Illusion</td><td>5%</td></tr>
+          <tr><td>Clearing Mokeet's Mansion</td><td>5%</td></tr>
+        </table>
+      </div>
+      <div class="shots">
+        <figure><img src="screenshots/world_map.png" width="512" height="768" alt="The world map, showing Chests Remaining: 0 and Completion: 100%"><figcaption>Chests remaining and completion</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section role="tabpanel" id="life" aria-labelledby="tab-life" hidden>
+    <div class="with-shots">
+      <div>
+        <h2>Quality of life</h2>
+        <p>Smaller changes that take the waiting and guessing out of the game.</p>
+        <h3>Options page</h3>
+        <ul>
+          <li>A gear button in the bag opens it. <kbd>X</kbd> explains each option.</li>
+          <li>Skip the opening logos.</li>
+          <li>The biorhythm voice cue: always, only in battle, or off.</li>
+          <li>The low-health alarm, the bag icon on the field, and music on or off.</li>
+        </ul>
+        <h3>Saving</h3>
+        <ul>
+          <li>No fixed "Saving…" wait.</li>
+          <li>The campfires after the Tower of Illusion's boss floors now allow saving.</li>
+        </ul>
+        <h3>Jasmine's mixing room</h3>
+        <ul>
+          <li>No stirring needed, and results stay on screen until <kbd>A</kbd>.</li>
+          <li>After the game is cleared, a signpost lists the four gear recipes that no recipe item teaches.</li>
+        </ul>
+        <h3>Grand Farm</h3>
+        <ul>
+          <li>You choose the crop.</li>
+          <li>Fields grow every hour you're away instead of every day, and are ruined after three days instead of two.</li>
+          <li>A signpost explains this.</li>
+        </ul>
+        <h3>Elsewhere</h3>
+        <ul>
+          <li>Lief's Final Slash attack plays faster than before.</li>
+          <li>The smith shows how many of each material you have.</li>
+          <li>Item descriptions have room for longer text.</li>
+          <li>The secret sound test shows which track is playing.</li>
+          <li>The first clear announces the Tower of Illusion, and the final screen offers a return to the title.</li>
+        </ul>
+      </div>
+      <div class="shots">
+        <figure><img src="screenshots/options.png" width="512" height="768" alt="The options page"><figcaption>The options page</figcaption></figure>
+        <figure><img src="screenshots/item_info.png" width="512" height="768" alt="The Apple's description"><figcaption>An item description</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section role="tabpanel" id="fixes" aria-labelledby="tab-fixes" hidden>
+    <h2>Fixes</h2>
+    <p>Bugs in the original game, fixed.</p>
+    <h3>Graphics</h3>
+    <ul>
+      <li>In Mokeet's Mansion's auto-scrolling rooms, Lief stays fully on screen.</li>
+      <li>Returning from a save point no longer leaves Lief stuck on a wall in Mokeet's Mansion.</li>
+    </ul>
+    <h3>Gameplay</h3>
+    <ul>
+      <li>Pumpkin Soup no longer resets a hero's biorhythm to the bottom when it wears off.</li>
+      <li>With protective boots on, Lief can attack on spikes and similar floors. Previously, the game would not allow attacking even with these boots being worn.</li>
+      <li>The low-health alarm stops after three beeps, and repeats now and then.</li>
+    </ul>
+    <h3>Crash reports</h3>
+    <ul>
+      <li>Each save records the game's lowest free memory and any failed memory allocations, in bytes the game never uses. This helps track down crashes that players report.</li>
+    </ul>
+  </section>
+
+  <footer>Full details and the source are on <a href="https://github.com/Vortyne/Deltora-DS-patcher">GitHub</a>.</footer>
+</main>
+
+<script>
+"use strict";
+// Tabs: the URL's #hash names the open one, so each tab can be linked to and Back works.
+const tabs = [...document.querySelectorAll('[role="tab"]')];
+function show(id, focus = false) {
+  const tab = tabs.find(t => t.getAttribute("aria-controls") === id) || tabs[0];
+  for (const t of tabs) {
+    const on = t === tab;
+    t.setAttribute("aria-selected", on);
+    t.tabIndex = on ? 0 : -1;
+    document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+  }
+  if (focus) tab.focus();
+}
+for (const t of tabs) {
+  t.addEventListener("click", () => { history.replaceState(null, "", "#" + t.getAttribute("aria-controls")); show(t.getAttribute("aria-controls")); });
+  // arrow keys move between tabs, as in any tab list
+  t.addEventListener("keydown", e => {
+    const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+    if (!step) return;
+    const next = tabs[(tabs.indexOf(t) + step + tabs.length) % tabs.length];
+    next.click();
+    next.focus();
+  });
+}
+window.addEventListener("hashchange", () => show(location.hash.slice(1)));
+show(location.hash.slice(1));
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+# The web patcher on GitHub Pages: docs/, plus the patch from the release that version_number.txt
+# names (tag v<version>), copied in so the page can download it from its own site, and the
+# translation page's text, made from translation/ so it always matches the patch's.
+name: Deploy the web patcher
+
+on:
+  release:
+    types: [published]
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "version_number.txt"
+      - "translation/**"
+      - "tools/export_translation.py"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble the site
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="$(tr -d '[:space:]' < version_number.txt)"
+          patch="Deltora_Quest_DS_english_patch_full_button_control_v${version}.bps"
+          mkdir site
+          cp -r docs/. site/
+          cp version_number.txt site/
+          python3 tools/export_translation.py site/translation.json
+          # before v<version> is released, deploy the rest anyway: publishing the release runs this again
+          gh release download "v${version}" --repo "${GITHUB_REPOSITORY}" --pattern "${patch}" --dir site \
+            || echo "::warning::No ${patch} in a v${version} release yet: the patcher can't patch until it's published"
+          ls -l site
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 760" width="760" height="760">
+<title>The seven gems of Deltora</title>
+<defs>
+<filter id="blur1" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="0.8"/></filter>
+<filter id="blur2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2"/></filter>
+<filter id="blur-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7"/></filter>
+<filter id="blur-wide" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="20"/></filter>
+<filter id="crackle" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.120" numOctaves="2" seed="77"/><feColorMatrix type="matrix" values="0 0 0 0 1.000  0 0 0 0 1.000  0 0 0 0 1.000  4.2 0 0 0 -2.5"/></filter>
+<filter id="flame-wide" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.018 0.045" numOctaves="3" seed="12" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="46" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="5"/></filter>
+<filter id="flame-tight" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.03 0.07" numOctaves="3" seed="31" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="22" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="2.5"/></filter>
+<radialGradient id="flare-bloom"><stop offset="0" stop-color="#d6f4ff" stop-opacity="0.95"/><stop offset="0.25" stop-color="#5cc8ff" stop-opacity="0.55"/><stop offset="0.6" stop-color="#5cc8ff" stop-opacity="0.15"/><stop offset="1" stop-color="#5cc8ff" stop-opacity="0"/></radialGradient>
+<radialGradient id="flare-core"><stop offset="0" stop-color="#ffffff" stop-opacity="1"/><stop offset="0.3" stop-color="#ffffff" stop-opacity="1"/><stop offset="0.55" stop-color="#d6f4ff" stop-opacity="0.7"/><stop offset="1" stop-color="#d6f4ff" stop-opacity="0"/></radialGradient>
+<filter id="fire-4" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.050" numOctaves="1" seed="4"/><feColorMatrix type="matrix" values="0 0 0 0 0.184  0 0 0 0 1.000  0 0 0 0 0.431  6 0 0 0 -3.3"/><feGaussianBlur stdDeviation="0.9"/></filter>
+<filter id="fire-17" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.050" numOctaves="1" seed="17"/><feColorMatrix type="matrix" values="0 0 0 0 0.133  0 0 0 0 0.784  0 0 0 0 1.000  6 0 0 0 -3.3"/><feGaussianBlur stdDeviation="0.9"/></filter>
+<filter id="fire-29" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.050" numOctaves="1" seed="29"/><feColorMatrix type="matrix" values="0 0 0 0 1.000  0 0 0 0 0.541  0 0 0 0 0.102  6 0 0 0 -3.3"/><feGaussianBlur stdDeviation="0.9"/></filter>
+<filter id="fire-41" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.050" numOctaves="1" seed="41"/><feColorMatrix type="matrix" values="0 0 0 0 1.000  0 0 0 0 0.184  0 0 0 0 0.310  6 0 0 0 -3.3"/><feGaussianBlur stdDeviation="0.9"/></filter>
+<radialGradient id="body-diamond" cx="50%" cy="50%" r="60%" fx="46%" fy="40%"><stop offset="0" stop-color="#ffffff" stop-opacity="1"/><stop offset="0.45" stop-color="#d3f0ff" stop-opacity="1"/><stop offset="1" stop-color="#4a7fae" stop-opacity="1"/></radialGradient>
+<radialGradient id="glow-diamond"><stop offset="0" stop-color="#d8f2ff" stop-opacity="0.8"/><stop offset="0.4" stop-color="#d8f2ff" stop-opacity="0.3"/><stop offset="1" stop-color="#d8f2ff" stop-opacity="0"/></radialGradient>
+<filter id="vl-diamond" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.026" numOctaves="3" seed="3"/><feColorMatrix type="matrix" values="0 0 0 0 1.000  0 0 0 0 1.000  0 0 0 0 1.000  3.3 0 0 0 -1.75"/></filter>
+<filter id="vd-diamond" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.034" numOctaves="2" seed="5"/><feColorMatrix type="matrix" values="0 0 0 0 0.561  0 0 0 0 0.776  0 0 0 0 0.918  3.1 0 0 0 -1.55"/></filter>
+<radialGradient id="body-emerald" cx="50%" cy="50%" r="60%" fx="46%" fy="40%"><stop offset="0" stop-color="#b4ffca" stop-opacity="1"/><stop offset="0.45" stop-color="#14ad4a" stop-opacity="1"/><stop offset="1" stop-color="#022a11" stop-opacity="1"/></radialGradient>
+<radialGradient id="glow-emerald"><stop offset="0" stop-color="#2dff7a" stop-opacity="0.8"/><stop offset="0.4" stop-color="#2dff7a" stop-opacity="0.3"/><stop offset="1" stop-color="#2dff7a" stop-opacity="0"/></radialGradient>
+<filter id="vl-emerald" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.030" numOctaves="3" seed="10"/><feColorMatrix type="matrix" values="0 0 0 0 0.784  0 0 0 0 1.000  0 0 0 0 0.541  3.3 0 0 0 -1.75"/></filter>
+<filter id="vd-emerald" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.037" numOctaves="2" seed="12"/><feColorMatrix type="matrix" values="0 0 0 0 0.004  0 0 0 0 0.239  0 0 0 0 0.094  3.1 0 0 0 -1.55"/></filter>
+<radialGradient id="body-lapis" cx="50%" cy="50%" r="60%" fx="46%" fy="40%"><stop offset="0" stop-color="#7f9fff" stop-opacity="1"/><stop offset="0.45" stop-color="#1d40c4" stop-opacity="1"/><stop offset="1" stop-color="#050e46" stop-opacity="1"/></radialGradient>
+<radialGradient id="glow-lapis"><stop offset="0" stop-color="#3f72ff" stop-opacity="0.8"/><stop offset="0.4" stop-color="#3f72ff" stop-opacity="0.3"/><stop offset="1" stop-color="#3f72ff" stop-opacity="0"/></radialGradient>
+<filter id="vl-lapis" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.034" numOctaves="3" seed="17"/><feColorMatrix type="matrix" values="0 0 0 0 0.565  0 0 0 0 0.682  0 0 0 0 1.000  3.3 0 0 0 -1.75"/></filter>
+<filter id="vd-lapis" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.040" numOctaves="2" seed="19"/><feColorMatrix type="matrix" values="0 0 0 0 0.024  0 0 0 0 0.082  0 0 0 0 0.369  3.1 0 0 0 -1.55"/></filter>
+<radialGradient id="body-topaz" cx="50%" cy="50%" r="60%" fx="46%" fy="40%"><stop offset="0" stop-color="#fff2a8" stop-opacity="1"/><stop offset="0.45" stop-color="#f5a417" stop-opacity="1"/><stop offset="1" stop-color="#552800" stop-opacity="1"/></radialGradient>
+<radialGradient id="glow-topaz"><stop offset="0" stop-color="#ffb52e" stop-opacity="0.8"/><stop offset="0.4" stop-color="#ffb52e" stop-opacity="0.3"/><stop offset="1" stop-color="#ffb52e" stop-opacity="0"/></radialGradient>
+<filter id="vl-topaz" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.038" numOctaves="3" seed="24"/><feColorMatrix type="matrix" values="0 0 0 0 1.000  0 0 0 0 0.851  0 0 0 0 0.306  3.3 0 0 0 -1.75"/></filter>
+<filter id="vd-topaz" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.043" numOctaves="2" seed="26"/><feColorMatrix type="matrix" values="0 0 0 0 0.455  0 0 0 0 0.220  0 0 0 0 0.000  3.1 0 0 0 -1.55"/></filter>
+<radialGradient id="body-opal" cx="50%" cy="50%" r="60%" fx="46%" fy="40%"><stop offset="0" stop-color="#3d6f8c" stop-opacity="1"/><stop offset="0.45" stop-color="#14304a" stop-opacity="1"/><stop offset="1" stop-color="#040d16" stop-opacity="1"/></radialGradient>
+<radialGradient id="glow-opal"><stop offset="0" stop-color="#5fd8ff" stop-opacity="0.8"/><stop offset="0.4" stop-color="#5fd8ff" stop-opacity="0.3"/><stop offset="1" stop-color="#5fd8ff" stop-opacity="0"/></radialGradient>
+<radialGradient id="body-ruby" cx="50%" cy="50%" r="60%" fx="46%" fy="40%"><stop offset="0" stop-color="#ff9090" stop-opacity="1"/><stop offset="0.45" stop-color="#d3061e" stop-opacity="1"/><stop offset="1" stop-color="#3a000a" stop-opacity="1"/></radialGradient>
+<radialGradient id="glow-ruby"><stop offset="0" stop-color="#ff2d48" stop-opacity="0.8"/><stop offset="0.4" stop-color="#ff2d48" stop-opacity="0.3"/><stop offset="1" stop-color="#ff2d48" stop-opacity="0"/></radialGradient>
+<filter id="vl-ruby" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.046" numOctaves="3" seed="38"/><feColorMatrix type="matrix" values="0 0 0 0 1.000  0 0 0 0 0.365  0 0 0 0 0.427  3.3 0 0 0 -1.75"/></filter>
+<filter id="vd-ruby" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.049" numOctaves="2" seed="40"/><feColorMatrix type="matrix" values="0 0 0 0 0.333  0 0 0 0 0.000  0 0 0 0 0.059  3.1 0 0 0 -1.55"/></filter>
+<radialGradient id="body-amethyst" cx="50%" cy="50%" r="60%" fx="46%" fy="40%"><stop offset="0" stop-color="#f0caff" stop-opacity="1"/><stop offset="0.45" stop-color="#8b2bd8" stop-opacity="1"/><stop offset="1" stop-color="#20053c" stop-opacity="1"/></radialGradient>
+<radialGradient id="glow-amethyst"><stop offset="0" stop-color="#b45cff" stop-opacity="0.8"/><stop offset="0.4" stop-color="#b45cff" stop-opacity="0.3"/><stop offset="1" stop-color="#b45cff" stop-opacity="0"/></radialGradient>
+<filter id="vl-amethyst" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.050" numOctaves="3" seed="45"/><feColorMatrix type="matrix" values="0 0 0 0 0.839  0 0 0 0 0.604  0 0 0 0 1.000  3.3 0 0 0 -1.75"/></filter>
+<filter id="vd-amethyst" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.052" numOctaves="2" seed="47"/><feColorMatrix type="matrix" values="0 0 0 0 0.212  0 0 0 0 0.035  0 0 0 0 0.384  3.1 0 0 0 -1.55"/></filter>
+</defs>
+<circle cx="380.0" cy="380.0" r="225" fill="url(#flare-bloom)"/><circle cx="380.0" cy="380.0" r="92" fill="none" stroke="#5cc8ff" stroke-opacity="0.5" stroke-width="4" filter="url(#blur2)"/><circle cx="380.0" cy="380.0" r="140" fill="none" stroke="#d6f4ff" stroke-opacity="0.18" stroke-width="10" filter="url(#blur-glow)"/><circle cx="380.0" cy="380.0" r="95" fill="url(#flare-core)"/>
+<circle cx="380.0" cy="380.0" r="255" fill="none" stroke="#5cc8ff" stroke-opacity="0.35" stroke-width="120" filter="url(#blur-wide)"/><circle cx="380.0" cy="380.0" r="255" fill="none" stroke="#5cc8ff" stroke-opacity="0.75" stroke-width="44" filter="url(#flame-wide)"/><circle cx="380.0" cy="380.0" r="255" fill="none" stroke="#d6f4ff" stroke-opacity="0.9" stroke-width="18" filter="url(#flame-tight)"/><circle cx="380.0" cy="380.0" r="255" fill="none" stroke="#ffffff" stroke-opacity="0.95" stroke-width="5" filter="url(#blur2)"/>
+<g transform="translate(241.1 593.9)">
+  <circle r="79" fill="url(#glow-diamond)" opacity="0.7"/>
+  <clipPath id="clip-diamond"><ellipse rx="44" ry="34" transform="rotate(-147.0)"/></clipPath>
+  <g clip-path="url(#clip-diamond)">
+    <g transform="rotate(-147.0)"><ellipse rx="44" ry="34" fill="url(#body-diamond)"/><rect x="-44" y="-34" width="88" height="68" filter="url(#vl-diamond)" opacity="0.55"/><rect x="-44" y="-34" width="88" height="68" filter="url(#vd-diamond)" opacity="0.5"/><rect x="-44" y="-34" width="88" height="68" filter="url(#crackle)" opacity="0.6"/><polygon points="44.0,0.0 38.1,17.0 19.1,8.5 22.0,0.0" fill="#9ccbee" opacity="0.28" stroke="#ffffff" stroke-opacity="0.7" stroke-width="0.6"/><polygon points="38.1,17.0 22.0,29.4 11.0,14.7 19.1,8.5" fill="#ffffff" opacity="0.28" stroke="#ffffff" stroke-opacity="0.7" stroke-width="0.6"/><polygon points="22.0,29.4 0.0,34.0 0.0,17.0 11.0,14.7" fill="#9ccbee" opacity="0.28" stroke="#ffffff" stroke-opacity="0.7" stroke-width="0.6"/><polygon points="0.0,34.0 -22.0,29.4 -11.0,14.7 0.0,17.0" fill="#ffffff" opacity="0.28" stroke="#ffffff" stroke-opacity="0.7" stroke-width="0.6"/><polygon points="-22.0,29.4 -38.1,17.0 -19.1,8.5 -11.0,14.7" fill="#9ccbee" opacity="0.28" stroke="#ffffff" stroke-opacity="0.7" stroke-width="0.6"/><polygon points="-38.1,17.0 -44.0,0.0 -22.0,0.0 -19.1,8.5" fill="#ffffff" opacity="0.28" stroke="#ffffff" stroke-opacity="0.7" stroke-width="0.6"/><polygon points="-44.0,0.0 -38.1,-17.0 -19.1,-8.5 -22.0,0.0" fill="#9ccbee" opacity="0.28" stroke="#ffffff" stroke-opacity="0.7" stroke-width="0.6"/><polygon points="-38.1,-17.0 -22.0,-29.4 -11.0,-14.7 -19.1,-8.5" fill="#ffffff" opacity="0.28" stroke="#ffffff" stroke-opacity="0.7" stroke-width="0.6"/><polygon points="-22.0,-29.4 -0.0,-34.0 -0.0,-17.0 -11.0,-14.7" fill="#9ccbee" opacity="0.28" stroke="#ffffff" stroke-opacity="0.7" stroke-width="0.6"/><polygon points="-0.0,-34.0 22.0,-29.4 11.0,-14.7 -0.0,-17.0" fill="#ffffff" opacity="0.28" stroke="#ffffff" stroke-opacity="0.7" stroke-width="0.6"/><polygon points="22.0,-29.4 38.1,-17.0 19.1,-8.5 11.0,-14.7" fill="#9ccbee" opacity="0.28" stroke="#ffffff" stroke-opacity="0.7" stroke-width="0.6"/><polygon points="38.1,-17.0 44.0,0.0 22.0,0.0 19.1,-8.5" fill="#ffffff" opacity="0.28" stroke="#ffffff" stroke-opacity="0.7" stroke-width="0.6"/><polygon points="22.0,0.0 19.1,8.5 11.0,14.7 0.0,17.0 -11.0,14.7 -19.1,8.5 -22.0,0.0 -19.1,-8.5 -11.0,-14.7 -0.0,-17.0 11.0,-14.7 19.1,-8.5" fill="#ffffff" opacity="0.25" stroke="#ffffff" stroke-width="0.7"/><ellipse rx="44" ry="34" fill="none" stroke="#000000" stroke-opacity="0.55" stroke-width="11" filter="url(#blur2)"/></g>
+    <ellipse cy="5.1" rx="15.3" ry="12.9" fill="#ffffff" opacity="0.16" filter="url(#blur-glow)"/><ellipse cx="-5.4" cy="-17.0" rx="21.1" ry="10.2" fill="#ffffff" opacity="0.3" filter="url(#blur2)"/><path d="M -21.8 -8.2 Q -17.0 -27.2 2.7 -25.8 Q -12.2 -20.4 -21.8 -8.2 Z" fill="#ffffff" opacity="0.88" filter="url(#blur1)"/><circle cx="-17.0" cy="-14.3" r="2.2" fill="#ffffff"/><path d="M -19.0 24.5 Q 0 34.7 19.0 24.5" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="2" filter="url(#blur1)"/>
+  </g>
+  <ellipse rx="44" ry="34" transform="rotate(-147.0)" fill="none" stroke="#0e1013" stroke-opacity="0.6" stroke-width="1.2"/>
+</g>
+<g transform="translate(127.5 415.5)">
+  <circle r="79" fill="url(#glow-emerald)" opacity="0.7"/>
+  <clipPath id="clip-emerald"><ellipse rx="44" ry="34" transform="rotate(-98.0)"/></clipPath>
+  <g clip-path="url(#clip-emerald)">
+    <g transform="rotate(-98.0)"><ellipse rx="44" ry="34" fill="url(#body-emerald)"/><rect x="-44" y="-34" width="88" height="68" filter="url(#vl-emerald)" opacity="0.55"/><rect x="-44" y="-34" width="88" height="68" filter="url(#vd-emerald)" opacity="0.5"/><ellipse rx="44" ry="34" fill="none" stroke="#000000" stroke-opacity="0.55" stroke-width="11" filter="url(#blur2)"/></g>
+    <ellipse cy="5.1" rx="15.3" ry="12.9" fill="#ffffff" opacity="0.16" filter="url(#blur-glow)"/><ellipse cx="-5.4" cy="-17.0" rx="21.1" ry="10.2" fill="#ffffff" opacity="0.3" filter="url(#blur2)"/><path d="M -21.8 -8.2 Q -17.0 -27.2 2.7 -25.8 Q -12.2 -20.4 -21.8 -8.2 Z" fill="#ffffff" opacity="0.88" filter="url(#blur1)"/><circle cx="-17.0" cy="-14.3" r="2.2" fill="#ffffff"/><path d="M -19.0 24.5 Q 0 34.7 19.0 24.5" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="2" filter="url(#blur1)"/>
+  </g>
+  <ellipse rx="44" ry="34" transform="rotate(-98.0)" fill="none" stroke="#0e1013" stroke-opacity="0.6" stroke-width="1.2"/>
+</g>
+<g transform="translate(187.5 212.7)">
+  <circle r="79" fill="url(#glow-lapis)" opacity="0.7"/>
+  <clipPath id="clip-lapis"><ellipse rx="44" ry="34" transform="rotate(-49.0)"/></clipPath>
+  <g clip-path="url(#clip-lapis)">
+    <g transform="rotate(-49.0)"><ellipse rx="44" ry="34" fill="url(#body-lapis)"/><rect x="-44" y="-34" width="88" height="68" filter="url(#vl-lapis)" opacity="0.55"/><rect x="-44" y="-34" width="88" height="68" filter="url(#vd-lapis)" opacity="0.5"/><ellipse rx="44" ry="34" fill="none" stroke="#000000" stroke-opacity="0.55" stroke-width="11" filter="url(#blur2)"/></g>
+    <ellipse cy="5.1" rx="15.3" ry="12.9" fill="#ffffff" opacity="0.16" filter="url(#blur-glow)"/><ellipse cx="-5.4" cy="-17.0" rx="21.1" ry="10.2" fill="#ffffff" opacity="0.3" filter="url(#blur2)"/><path d="M -21.8 -8.2 Q -17.0 -27.2 2.7 -25.8 Q -12.2 -20.4 -21.8 -8.2 Z" fill="#ffffff" opacity="0.88" filter="url(#blur1)"/><circle cx="-17.0" cy="-14.3" r="2.2" fill="#ffffff"/><path d="M -19.0 24.5 Q 0 34.7 19.0 24.5" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="2" filter="url(#blur1)"/>
+  </g>
+  <ellipse rx="44" ry="34" transform="rotate(-49.0)" fill="none" stroke="#0e1013" stroke-opacity="0.6" stroke-width="1.2"/>
+</g>
+<g transform="translate(380.0 125.0)">
+  <circle r="79" fill="url(#glow-topaz)" opacity="0.7"/>
+  <clipPath id="clip-topaz"><ellipse rx="44" ry="34" transform="rotate(0.0)"/></clipPath>
+  <g clip-path="url(#clip-topaz)">
+    <g transform="rotate(0.0)"><ellipse rx="44" ry="34" fill="url(#body-topaz)"/><rect x="-44" y="-34" width="88" height="68" filter="url(#vl-topaz)" opacity="0.55"/><rect x="-44" y="-34" width="88" height="68" filter="url(#vd-topaz)" opacity="0.5"/><ellipse rx="44" ry="34" fill="none" stroke="#000000" stroke-opacity="0.55" stroke-width="11" filter="url(#blur2)"/></g>
+    <ellipse cy="5.1" rx="15.3" ry="12.9" fill="#ffffff" opacity="0.16" filter="url(#blur-glow)"/><ellipse cx="-5.4" cy="-17.0" rx="21.1" ry="10.2" fill="#ffffff" opacity="0.3" filter="url(#blur2)"/><path d="M -21.8 -8.2 Q -17.0 -27.2 2.7 -25.8 Q -12.2 -20.4 -21.8 -8.2 Z" fill="#ffffff" opacity="0.88" filter="url(#blur1)"/><circle cx="-17.0" cy="-14.3" r="2.2" fill="#ffffff"/><path d="M -19.0 24.5 Q 0 34.7 19.0 24.5" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="2" filter="url(#blur1)"/>
+  </g>
+  <ellipse rx="44" ry="34" transform="rotate(0.0)" fill="none" stroke="#0e1013" stroke-opacity="0.6" stroke-width="1.2"/>
+</g>
+<g transform="translate(572.5 212.7)">
+  <circle r="79" fill="url(#glow-opal)" opacity="0.7"/>
+  <clipPath id="clip-opal"><ellipse rx="44" ry="34" transform="rotate(49.0)"/></clipPath>
+  <g clip-path="url(#clip-opal)">
+    <g transform="rotate(49.0)"><ellipse rx="44" ry="34" fill="url(#body-opal)"/><rect x="-44" y="-34" width="88" height="68" filter="url(#fire-4)" opacity="0.95"/><rect x="-44" y="-34" width="88" height="68" filter="url(#fire-17)" opacity="0.95"/><rect x="-44" y="-34" width="88" height="68" filter="url(#fire-29)" opacity="0.95"/><rect x="-44" y="-34" width="88" height="68" filter="url(#fire-41)" opacity="0.95"/><ellipse rx="44" ry="34" fill="none" stroke="#000000" stroke-opacity="0.55" stroke-width="11" filter="url(#blur2)"/></g>
+    <ellipse cy="5.1" rx="15.3" ry="12.9" fill="#ffffff" opacity="0.16" filter="url(#blur-glow)"/><ellipse cx="-5.4" cy="-17.0" rx="21.1" ry="10.2" fill="#ffffff" opacity="0.3" filter="url(#blur2)"/><path d="M -21.8 -8.2 Q -17.0 -27.2 2.7 -25.8 Q -12.2 -20.4 -21.8 -8.2 Z" fill="#ffffff" opacity="0.88" filter="url(#blur1)"/><circle cx="-17.0" cy="-14.3" r="2.2" fill="#ffffff"/><path d="M -19.0 24.5 Q 0 34.7 19.0 24.5" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="2" filter="url(#blur1)"/>
+  </g>
+  <ellipse rx="44" ry="34" transform="rotate(49.0)" fill="none" stroke="#0e1013" stroke-opacity="0.6" stroke-width="1.2"/>
+</g>
+<g transform="translate(632.5 415.5)">
+  <circle r="79" fill="url(#glow-ruby)" opacity="0.7"/>
+  <clipPath id="clip-ruby"><ellipse rx="44" ry="34" transform="rotate(98.0)"/></clipPath>
+  <g clip-path="url(#clip-ruby)">
+    <g transform="rotate(98.0)"><ellipse rx="44" ry="34" fill="url(#body-ruby)"/><rect x="-44" y="-34" width="88" height="68" filter="url(#vl-ruby)" opacity="0.55"/><rect x="-44" y="-34" width="88" height="68" filter="url(#vd-ruby)" opacity="0.5"/><ellipse rx="44" ry="34" fill="none" stroke="#000000" stroke-opacity="0.55" stroke-width="11" filter="url(#blur2)"/></g>
+    <ellipse cy="5.1" rx="15.3" ry="12.9" fill="#ffffff" opacity="0.16" filter="url(#blur-glow)"/><ellipse cx="-5.4" cy="-17.0" rx="21.1" ry="10.2" fill="#ffffff" opacity="0.3" filter="url(#blur2)"/><path d="M -21.8 -8.2 Q -17.0 -27.2 2.7 -25.8 Q -12.2 -20.4 -21.8 -8.2 Z" fill="#ffffff" opacity="0.88" filter="url(#blur1)"/><circle cx="-17.0" cy="-14.3" r="2.2" fill="#ffffff"/><path d="M -19.0 24.5 Q 0 34.7 19.0 24.5" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="2" filter="url(#blur1)"/>
+  </g>
+  <ellipse rx="44" ry="34" transform="rotate(98.0)" fill="none" stroke="#0e1013" stroke-opacity="0.6" stroke-width="1.2"/>
+</g>
+<g transform="translate(518.9 593.9)">
+  <circle r="79" fill="url(#glow-amethyst)" opacity="0.7"/>
+  <clipPath id="clip-amethyst"><ellipse rx="44" ry="34" transform="rotate(147.0)"/></clipPath>
+  <g clip-path="url(#clip-amethyst)">
+    <g transform="rotate(147.0)"><ellipse rx="44" ry="34" fill="url(#body-amethyst)"/><rect x="-44" y="-34" width="88" height="68" filter="url(#vl-amethyst)" opacity="0.55"/><rect x="-44" y="-34" width="88" height="68" filter="url(#vd-amethyst)" opacity="0.5"/><ellipse rx="44" ry="34" fill="none" stroke="#000000" stroke-opacity="0.55" stroke-width="11" filter="url(#blur2)"/></g>
+    <ellipse cy="5.1" rx="15.3" ry="12.9" fill="#ffffff" opacity="0.16" filter="url(#blur-glow)"/><ellipse cx="-5.4" cy="-17.0" rx="21.1" ry="10.2" fill="#ffffff" opacity="0.3" filter="url(#blur2)"/><path d="M -21.8 -8.2 Q -17.0 -27.2 2.7 -25.8 Q -12.2 -20.4 -21.8 -8.2 Z" fill="#ffffff" opacity="0.88" filter="url(#blur1)"/><circle cx="-17.0" cy="-14.3" r="2.2" fill="#ffffff"/><path d="M -19.0 24.5 Q 0 34.7 19.0 24.5" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="2" filter="url(#blur1)"/>
+  </g>
+  <ellipse rx="44" ry="34" transform="rotate(147.0)" fill="none" stroke="#0e1013" stroke-opacity="0.6" stroke-width="1.2"/>
+</g>
+</svg>

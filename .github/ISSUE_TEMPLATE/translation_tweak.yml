@@ -1,0 +1,47 @@
+# Opened from the translation page (docs/translation.html), which fills in these fields through the
+# link: each field's id is its name in the link's query string (line, area, current, suggested,
+# reason, version).
+name: Translation tweak
+description: Suggest a better wording for a line of the English text.
+title: "Translation tweak: "
+labels: ["translation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The easiest way to suggest a change is from the [translation page](https://vortyne.github.io/Deltora-DS-patcher/translation.html): find the line, press **Suggest a change**, and this form is filled in for you.
+  - type: input
+    id: line
+    attributes:
+      label: Line
+      description: The line's ID on the translation page, such as 2182/189.
+      placeholder: 2182/189
+    validations:
+      required: true
+  - type: input
+    id: area
+    attributes:
+      label: Area
+      description: Where in the game the line is.
+  - type: textarea
+    id: current
+    attributes:
+      label: Current text
+      description: "▼ starts a new page of the text box."
+  - type: textarea
+    id: suggested
+    attributes:
+      label: Suggested text
+      description: "Keep {codes} such as {fff7} as they are: they colour names and fill in values."
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Why
+      description: Optional. For example, the books spell it differently, or it doesn't fit what's happening on screen.
+  - type: input
+    id: version
+    attributes:
+      label: Patch version
+      placeholder: "1.0"

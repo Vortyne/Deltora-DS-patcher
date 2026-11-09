@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Translation · Deltora DS Patcher</title>
+<meta name="description" content="Read every line of the English translation of Deltora Quest: Nanatsu no Houseki, and suggest changes.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0a0c10">
+<!-- the link preview on Discord, social sites and chat apps -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Deltora DS Patcher">
+<meta property="og:title" content="Translation · Deltora DS Patcher">
+<meta property="og:description" content="Read every line of the English translation of Deltora Quest: Nanatsu no Houseki, and suggest changes.">
+<meta property="og:url" content="https://vortyne.github.io/Deltora-DS-patcher/translation.html">
+<meta property="og:image" content="https://vortyne.github.io/Deltora-DS-patcher/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The seven gems of Deltora on a ring of light, around the Deltora DS Patcher logo">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Cinzel:wght@800&display=swap">
+<style>
+  /* the download page's colours: always dark, in the light blue of the art's halo */
+  :root {
+    color-scheme: dark;
+    --bg: #0a0c10;
+    --panel: #12161d;
+    --ink: #e6eef5;
+    --muted: #8d9aa8;
+    --line: #26303c;
+    --accent: #5cc8ff;
+    --accent-ink: #04131d;
+    --accent-hover: #8fdaff;
+    --accent-soft: rgba(92, 200, 255, 0.1);
+    --name: #ffcf5a;           /* the game's coloured names */
+    --name2: #ff9a6b;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: var(--accent); }
+  header { position: sticky; top: 0; z-index: 2; background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 16px 0; }
+  .top { max-width: 1000px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+  .back { color: var(--muted); font-size: 0.85rem; text-decoration: none; }
+  .back:hover { color: var(--ink); }
+  .logo { margin: 0; font-family: "Cinzel Decorative", "Cinzel", Georgia, serif; font-weight: 900; font-size: 1.5rem; line-height: 1.1; }
+  .logo a { text-decoration: none; }
+  .logo span {
+    background: linear-gradient(#fffbe0 0%, #ffe27a 30%, #ffb52e 58%, #e8700c 80%, #a83c04 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(1px 0 0 #3a1a04) drop-shadow(-1px 0 0 #3a1a04) drop-shadow(0 1px 0 #3a1a04) drop-shadow(0 -1px 0 #3a1a04);
+  }
+  .logo .what { font-family: "Cinzel", Georgia, serif; text-transform: uppercase; font-size: 0.8em; letter-spacing: 0.04em; }
+  .logo small { font: 600 0.95rem system-ui, sans-serif; color: var(--muted); margin-left: 6px; }
+  input[type=search], textarea, select {
+    font: inherit; color: inherit; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px;
+  }
+  input[type=search] { flex: 1 1 220px; min-width: 0; }
+  input[type=search]:focus, textarea:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
+  #status { color: var(--muted); font-size: 0.85rem; }
+  /* the areas: a row that scrolls sideways */
+  nav { max-width: 1000px; margin: 10px auto 0; display: flex; gap: 2px; overflow-x: auto; scrollbar-width: thin; }
+  nav button {
+    appearance: none; border: 0; border-bottom: 3px solid transparent; background: none; color: var(--muted);
+    font: 600 0.9rem system-ui, sans-serif; white-space: nowrap; padding: 8px 10px; cursor: pointer;
+  }
+  nav button:hover { color: var(--ink); }
+  nav button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+  nav button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  main { max-width: 1000px; margin: 0 auto; padding: 0 16px 80px; }
+  .intro { color: var(--muted); font-size: 0.9rem; margin: 14px 0 6px; }
+  .row { display: grid; grid-template-columns: 84px 1fr auto; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .id { color: var(--muted); font: 0.8rem ui-monospace, Consolas, monospace; padding-top: 2px; }
+  .text { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .page { color: var(--accent); font-size: 0.8em; }               /* ▼: a new text box page */
+  .c1 { color: var(--name); }
+  .c2 { color: var(--name2); }
+  .ph { font-size: 0.8em; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; color: var(--muted); }
+  .suggest {
+    appearance: none; border: 1px solid var(--line); border-radius: 8px; background: transparent; color: var(--muted);
+    font: 0.85rem system-ui, sans-serif; padding: 5px 10px; cursor: pointer; white-space: nowrap;
+  }
+  .suggest:hover { color: var(--accent); border-color: var(--accent); }
+  .suggest:focus-visible, .go:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  /* the suggestion form, under its line */
+  .form { grid-column: 2 / 4; display: grid; gap: 8px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+  .form label { font-size: 0.85rem; color: var(--muted); }
+  .form textarea { width: 100%; resize: vertical; background: var(--bg); }
+  .actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .go {
+    appearance: none; border: 0; border-radius: 8px; background: var(--accent); color: var(--accent-ink);
+    font: 600 0.9rem system-ui, sans-serif; padding: 8px 14px; cursor: pointer; text-decoration: none;
+  }
+  .go:hover { background: var(--accent-hover); }
+  .cancel { appearance: none; border: 0; background: none; color: var(--muted); font: inherit; cursor: pointer; text-decoration: underline; }
+  .hint { color: var(--muted); font-size: 0.8rem; }
+  .empty { color: var(--muted); padding: 28px 0; }
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr auto; gap: 6px 10px; }
+    .id { grid-column: 1 / 3; }
+    .form { grid-column: 1 / 3; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <a class="back" href="./">← Download</a>
+    <h1 class="logo"><a href="./"><span>Deltora DS</span> <span class="what">Patcher</span></a><small>Translation</small></h1>
+    <input id="q" type="search" placeholder="Search every line" aria-label="Search every line">
+    <span id="status" aria-live="polite"></span>
+  </div>
+  <nav id="areas" role="tablist" aria-label="Areas of the game"></nav>
+</header>
+<main>
+  <p class="intro">Every line of the English translation, as the latest patch has it. Spotted something wrong or awkward? Press <b>Suggest a change</b> beside the line: it opens a GitHub issue with your change filled in. <span class="page">▼</span> starts a new page of the text box; names in colour and things like <span class="ph">number</span> are filled in by the game.</p>
+  <div id="rows"></div>
+</main>
+
+<script>
+"use strict";
+const REPO = "https://github.com/Vortyne/Deltora-DS-patcher";
+const MAX_URL = 7500;            // GitHub turns away longer issue links
+const LIMIT = 400;               // lines drawn at once
+const $ = id => document.getElementById(id);
+let areas = [], rows = [], area = 0, version = "";
+
+// The game's codes inside the text: coloured names, and values the game fills in
+const NAMED = { fff5: "number", fff6: "name" };
+const HIDDEN = new Set(["fff9", "0102"]);          // layout codes with nothing to show
+function render(el, text) {
+  let colour = null;
+  const add = node => (colour || el).append(node);
+  for (const part of text.split(/(\{[0-9a-fA-F]{4}\}|\f)/)) {
+    if (!part) continue;
+    if (part === "\f") {
+      const m = document.createElement("span"); m.className = "page"; m.textContent = "▼\n"; add(m);
+    } else if (/^\{[0-9a-fA-F]{4}\}$/.test(part)) {
+      const code = part.slice(1, 5).toLowerCase();
+      if (code === "fff7" || code === "fff8") {
+        colour = document.createElement("span"); colour.className = code === "fff7" ? "c1" : "c2"; el.append(colour);
+      } else if (code === "fffc") colour = null;
+      else if (NAMED[code]) { const p = document.createElement("span"); p.className = "ph"; p.textContent = NAMED[code]; add(p); }
+      else if (!HIDDEN.has(code)) add(part);
+    } else add(part);
+  }
+}
+const toBox = s => s.replace(/\f/g, "▼\n");
+
+function issueUrl(r, suggested, reason) {
+  const params = new URLSearchParams({
+    template: "translation_tweak.yml",
+    title: `Translation tweak: ${r.key}`,
+    line: r.key,
+    area: areas[r.area].name,
+    current: toBox(r.text),
+    suggested: suggested,
+    reason: reason,
+    version: version,
+  });
+  let url = `${REPO}/issues/new?${params}`;
+  if (url.length > MAX_URL) {           // too long for a link: leave the current text out, it's on the page
+    params.set("current", `(too long to fill in: see line ${r.key} on the translation page)`);
+    url = `${REPO}/issues/new?${params}`;
+  }
+  return url;
+}
+
+function openForm(row, r, button) {
+  if (row.querySelector(".form")) { row.querySelector("textarea").focus(); return; }
+  const form = document.createElement("div");
+  form.className = "form";
+  const id = "s-" + r.key.replace("/", "-");
+  form.innerHTML = `<label for="${id}">Your version (keep {codes} such as {fff7} as they are; ▼ starts a new page)</label>
+    <textarea id="${id}" rows="3"></textarea>
+    <label for="${id}-why">Why (optional)</label>
+    <textarea id="${id}-why" rows="2" placeholder="For example: the books call it the Lake of Tears"></textarea>
+    <div class="actions"><a class="go" target="_blank" rel="noopener">Open on GitHub</a><button class="cancel" type="button">Cancel</button>
+    <span class="hint">You'll need a GitHub account to send it.</span></div>`;
+  const box = form.querySelector("textarea"), why = form.querySelector(`#${id}-why`), go = form.querySelector(".go");
+  box.value = toBox(r.text);
+  box.rows = Math.max(3, box.value.split("\n").length + 1);
+  const update = () => { go.href = issueUrl(r, box.value, why.value); };
+  box.addEventListener("input", update);
+  why.addEventListener("input", update);
+  update();
+  form.querySelector(".cancel").onclick = () => { form.remove(); button.hidden = false; button.focus(); };
+  button.hidden = true;
+  row.append(form);
+  box.focus();
+}
+
+function build(r) {
+  const row = document.createElement("div");
+  row.className = "row";
+  const id = document.createElement("div"), text = document.createElement("div"), button = document.createElement("button");
+  id.className = "id"; id.textContent = r.key;
+  text.className = "text"; render(text, r.text);
+  button.className = "suggest"; button.type = "button"; button.textContent = "Suggest a change";
+  button.setAttribute("aria-label", `Suggest a change to line ${r.key}`);
+  button.onclick = () => openForm(row, r, button);
+  row.append(id, text, button);
+  return row;
+}
+
+function draw() {
+  const q = $("q").value.trim().toLowerCase();
+  const list = q ? rows.filter(r => (r.text + "\n" + r.key).toLowerCase().includes(q)) : rows.filter(r => r.area === area);
+  const host = $("rows");
+  host.replaceChildren(...list.slice(0, LIMIT).map(build));
+  if (!list.length) host.innerHTML = `<div class="empty">No lines match.</div>`;
+  else if (list.length > LIMIT) host.insertAdjacentHTML("beforeend", `<div class="empty">Showing the first ${LIMIT} of ${list.length}. Narrow the search to see the rest.</div>`);
+  $("status").textContent = q ? `${list.length} found in every area` : `${list.length} lines`;
+  [...$("areas").children].forEach((b, i) => b.setAttribute("aria-selected", !q && i === area));
+}
+
+function choose(i, push = true) {
+  area = i;
+  $("q").value = "";
+  if (push) history.replaceState(null, "", "#" + areas[i].bank);
+  draw();
+  scrollTo(0, 0);
+}
+
+async function start() {
+  try {
+    const response = await fetch("translation.json", { cache: "no-cache" });
+    if (!response.ok) throw new Error(response.status);
+    const data = await response.json();
+    areas = data.areas;
+    version = data.version;
+  } catch (e) {
+    $("rows").innerHTML = `<div class="empty">Couldn't load the translation. Try again in a moment.</div>`;
+    return;
+  }
+  rows = areas.flatMap((a, i) => a.rows.map(([id, text]) => ({ area: i, key: `${a.bank}/${id}`, text })));
+  areas.forEach((a, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.setAttribute("role", "tab"); b.textContent = a.name;
+    b.onclick = () => choose(i);
+    $("areas").append(b);
+  });
+  // #2182 opens that area; #2182/189 opens it at that line
+  const [bank, line] = location.hash.slice(1).split("/");
+  const found = areas.findIndex(a => String(a.bank) === bank);
+  choose(found < 0 ? 0 : found, false);
+  if (line) {
+    const el = [...document.querySelectorAll(".id")].find(e => e.textContent === `${bank}/${line}`);
+    if (el) { el.parentElement.scrollIntoView({ block: "center" }); el.parentElement.querySelector(".suggest").focus(); }
+  }
+}
+
+let timer;
+$("q").addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(draw, 150); });
+start();
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!doctype html>
+<!-- The site's icon, a gold D like the logo's (docs/favicon*.png): python art/render_images.py -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&display=block">
+<style>
+  html, body { margin: 0; width: 512px; height: 512px; overflow: hidden; background: transparent; }
+  .tile { position: absolute; inset: 0; border-radius: 96px; background: radial-gradient(circle at 50% 45%, #1b3a52 0%, #0d1620 60%, #0a0c10 100%); }
+  .d {
+    position: absolute; inset: 0; display: flex; justify-content: center; align-items: center;
+    font: 900 430px/1 "Cinzel Decorative", Georgia, serif; padding-top: 18px;
+  }
+  .d span {
+    background: linear-gradient(#fffbe0 0%, #ffe27a 28%, #ffb52e 55%, #e8700c 80%, #a83c04 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(6px 0 0 #3a1a04) drop-shadow(-6px 0 0 #3a1a04) drop-shadow(0 6px 0 #3a1a04) drop-shadow(0 -6px 0 #3a1a04);
+  }
+</style>
+</head>
+<body>
+  <div class="tile"></div>
+  <div class="d"><span>D</span></div>
+</body>
+</html>
