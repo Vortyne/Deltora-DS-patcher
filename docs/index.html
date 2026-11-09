@@ -54,7 +54,9 @@
   }
   main { width: 100%; max-width: 660px; text-align: center; }     /* room for the note on one line */
   /* the gems' ring with the title in its middle; the ring's dark edges overlap what's around it */
-  .hero { --art: min(660px, 98vw); position: relative; width: var(--art); margin: -60px auto -70px; pointer-events: none; }   /* clicks pass through to what it overlaps */
+  /* the art's empty top (above the halo's glow) runs into the page's top padding; the text below
+     starts under the whole graphic, glow included, at any screen width */
+  .hero { --art: min(660px, 98vw); position: relative; width: var(--art); margin: calc(var(--art) * -0.12) auto -40px; pointer-events: none; }   /* clicks pass through to what it overlaps */
   .art { display: block; width: 100%; height: auto; pointer-events: none; }
   /* gold letters with a dark rim, like the game's own logo */
   h1 {
@@ -83,7 +85,7 @@
   h1 .name { font-size: calc(var(--art) * 0.09); letter-spacing: 0.01em; }
   /* full capitals: Cinzel's lower case is small capitals, which sat in the gradient's dark end */
   h1 .what { font-family: "Cinzel", Georgia, serif; font-size: calc(var(--art) * 0.056); text-transform: uppercase; margin-top: calc(var(--art) * 0.01); letter-spacing: 0.04em; }
-  .subtitle { color: var(--muted); font-size: 1.1rem; margin: 0 0 40px; }
+  .subtitle { color: var(--muted); font-size: 1.1rem; margin: 0 0 22px; }
   .more { display: inline-block; margin-top: 6px; color: var(--accent); font-size: 1rem; }
   .more:hover { color: var(--accent-hover); }
   .big {
@@ -168,7 +170,7 @@
   li.done .mark { border-color: var(--done); background: var(--done); color: var(--panel); }
   li.error .mark { border-color: var(--error); background: var(--error); color: var(--panel); }
   li.error .step-detail { color: var(--error); }
-  footer { color: var(--muted); font-size: 0.85rem; margin-top: 40px; }
+  footer { color: var(--muted); font-size: 0.95rem; margin-top: 18px; }
   footer a, .note a { color: inherit; }
 </style>
 </head>
@@ -196,7 +198,7 @@
   <p class="note"><a id="version" href="https://github.com/Vortyne/Deltora-DS-patcher/releases/latest">The latest version</a> · <a href="https://github.com/Vortyne/Deltora-DS-patcher/releases">All releases</a> · <a href="translation.html">Review the translation</a></p>
   <input id="rom" type="file" accept=".nds,application/octet-stream" hidden>
 
-  <footer>Patches <i>Deltora Quest: Nanatsu no Houseki</i> (Japan). Source and build instructions on <a href="https://github.com/Vortyne/Deltora-DS-patcher">GitHub</a>.</footer>
+  <footer><a href="https://github.com/Vortyne/Deltora-DS-patcher">Source code and build instructions on GitHub</a></footer>
 </main>
 
 <script src="bps.js"></script>
