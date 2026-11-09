@@ -100,6 +100,11 @@
   .big:hover { background: var(--accent-hover); }
   .big:focus-visible { outline: 3px solid var(--active); outline-offset: 3px; }
   .note { color: var(--muted); font-size: 0.9rem; margin: 14px 0 0; }
+  /* under the ROM box: the patch itself, for patching by hand */
+  .alt { margin: 8px 0 0; text-align: center; font-size: 0.85rem; }
+  .alt a { color: var(--muted); }
+  .alt a:hover { color: var(--accent); }
+  .alt[hidden] { display: none; }
   ol.steps {
     list-style: none;
     max-width: 560px;
@@ -180,6 +185,7 @@
     <li id="step-select">
       <button id="pick" class="step" type="button"><span class="mark" hidden></span><span class="step-text"><span class="step-title">Select your ROM file</span><span class="step-detail"></span>
         <dl class="sums" hidden><dt id="sum-yours-label">Your file</dt><dd id="sum-yours"></dd><dt id="sum-correct-label">Correct ROM</dt><dd id="sum-correct"></dd></dl></span></button>
+      <p class="alt" id="bps-alt"><a id="bps-link" href="https://github.com/Vortyne/Deltora-DS-patcher/releases/latest">Or just download the .bps patch file</a></p>
     </li>
     <li id="step-save" hidden>
       <button id="save" class="big" type="button">Download patched game</button>
@@ -214,7 +220,12 @@ async function version() {
   }
   return versionNumber;
 }
-version().then(v => { document.getElementById("version").textContent = `Patch v${v}`; }).catch(() => {});
+version().then(v => {
+  document.getElementById("version").textContent = `Patch v${v}`;
+  const link = document.getElementById("bps-link");     // the site's own copy, saved under its own name
+  link.href = PATCH_NAME(v);
+  link.download = PATCH_NAME(v);
+}).catch(() => {});
 
 const button = document.getElementById("download");
 const steps = document.querySelector("ol.steps");
@@ -234,6 +245,7 @@ function setStep(id, state, detail = "") {
     mark.hidden = state !== "done" && state !== "error";
     mark.textContent = state === "done" ? "✓" : "!";
   }
+  if (id === "step-select") document.getElementById("bps-alt").hidden = state === "done";   // only while choosing the ROM
   li.querySelector(".step-detail").textContent = detail;
 }
 
