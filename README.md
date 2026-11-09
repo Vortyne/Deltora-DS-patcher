@@ -2,7 +2,7 @@
 
 An English translation and enhancement of **Deltora Quest: Nanatsu no Houseki** (デルトラ・クエスト 七つの宝石), the 2007 Nintendo DS action RPG based on Emily Rodda's books, released only in Japan.
 
-This repository builds the English ROM from your own copy of the Japanese game. It contains only the patches: the translation, our own ARM code and script changes, and the tools that apply them. It contains no code, graphics, text or sound from the original game.
+This repository builds the English ROM from your own copy of the Japanese game. It contains only the patches: the translation, our own ARM code and script changes, and the tools that apply them. Apart from the game's Japanese text, kept so the translation can be checked against it, it contains no code, graphics or sound from the original game.
 
 The patched game can be played on a real DS or in an emulator, and the whole game can be played with the buttons instead of the stylus.
 
@@ -70,7 +70,7 @@ The English ROM is written to `out/Deltora_Quest_DS_english_patch_full_button_co
 
 Pushing the patch runs `.github/workflows/pages.yml`, which deploys the web patcher from `docs/` together with `version_number.txt`. The page downloads the patch from its own site, since browsers can't download GitHub release files directly.
 
-The site's [translation page](https://vortyne.github.io/Deltora-DS-patcher/translation.html) shows every English line, and its **Suggest a change** button opens a filled-in *Translation tweak* issue. Its text is made by `tools/export_translation.py` from `translation/` at each deploy, and any push that changes `translation/` deploys again, so the page always matches the patch. It shows only the English: the game's Japanese script isn't published.
+The site's [translation page](https://vortyne.github.io/Deltora-DS-patcher/translation.html) shows every English line beside the game's Japanese, and its **Suggest a change** button opens a filled-in *Translation tweak* issue. Its text is made by `tools/export_translation.py` from `translation/` at each deploy, and any push that changes `translation/` deploys again, so the page always matches the patch.
 
 GitHub Pages must be set to deploy from **GitHub Actions** (in **Settings → Pages**).
 
@@ -189,6 +189,7 @@ The game's archive is rebuilt, with changed files moved to the end where they do
 | `builder/build_rom.py`, `lf2.py`, `scr.py` | ROM, archive and script formats |
 | `translation/en/` | The English text, one file per text bank |
 | `translation/adjustments.json` | Hand adjustments to individual lines |
+| `translation/ja.json` | The game's Japanese text, for the translation page to show beside the English |
 | `translation/glossary.md` | Spellings and naming decisions for the translation |
 
 The files in `builder/controls/` share one namespace: `__init__.py` loads them in order, so each feature's assembly can use names from the others.

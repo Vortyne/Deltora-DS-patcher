@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Translation · Deltora DS Patcher</title>
-<meta name="description" content="Read every line of the English translation of Deltora Quest: Nanatsu no Houseki, and suggest changes.">
+<meta name="description" content="Compare every line of the English translation of Deltora Quest: Nanatsu no Houseki with the Japanese, and suggest changes.">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Deltora DS Patcher">
 <meta property="og:title" content="Translation · Deltora DS Patcher">
-<meta property="og:description" content="Read every line of the English translation of Deltora Quest: Nanatsu no Houseki, and suggest changes.">
+<meta property="og:description" content="Compare every line of the English translation of Deltora Quest: Nanatsu no Houseki with the Japanese, and suggest changes.">
 <meta property="og:url" content="https://vortyne.github.io/Deltora-DS-patcher/translation.html">
 <meta property="og:image" content="https://vortyne.github.io/Deltora-DS-patcher/preview.png">
 <meta property="og:image:width" content="1200">
@@ -72,7 +72,10 @@
   nav button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
   main { max-width: 1000px; margin: 0 auto; padding: 0 16px 80px; }
   .intro { color: var(--muted); font-size: 0.9rem; margin: 14px 0 6px; }
-  .row { display: grid; grid-template-columns: 84px 1fr auto; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .head, .row { display: grid; grid-template-columns: 84px 1fr 1fr auto; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .head { font-size: 0.8rem; font-weight: 600; color: var(--muted); padding: 8px 0; }
+  .ja { font-family: "Yu Gothic UI", "Hiragino Sans", "Noto Sans JP", Meiryo, system-ui, sans-serif; color: #c9d4de; }
+  .new { color: var(--muted); font-style: italic; font-size: 0.85rem; }
   .id { color: var(--muted); font: 0.8rem ui-monospace, Consolas, monospace; padding-top: 2px; }
   .text { white-space: pre-wrap; overflow-wrap: anywhere; }
   .page { color: var(--accent); font-size: 0.8em; }               /* ▼: a new text box page */
@@ -86,7 +89,7 @@
   .suggest:hover { color: var(--accent); border-color: var(--accent); }
   .suggest:focus-visible, .go:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   /* the suggestion form, under its line */
-  .form { grid-column: 2 / 4; display: grid; gap: 8px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+  .form { grid-column: 2 / 5; display: grid; gap: 8px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
   .form label { font-size: 0.85rem; color: var(--muted); }
   .form textarea { width: 100%; resize: vertical; background: var(--bg); }
   .actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
@@ -99,8 +102,9 @@
   .hint { color: var(--muted); font-size: 0.8rem; }
   .empty { color: var(--muted); padding: 28px 0; }
   @media (max-width: 640px) {
+    .head { display: none; }
     .row { grid-template-columns: 1fr auto; gap: 6px 10px; }
-    .id { grid-column: 1 / 3; }
+    .id, .ja { grid-column: 1 / 3; }
     .form { grid-column: 1 / 3; }
   }
 </style>
@@ -116,7 +120,8 @@
   <nav id="areas" role="tablist" aria-label="Areas of the game"></nav>
 </header>
 <main>
-  <p class="intro">Every line of the English translation, as the latest patch has it. Spotted something wrong or awkward? Press <b>Suggest a change</b> beside the line: it opens a GitHub issue with your change filled in. <span class="page">▼</span> starts a new page of the text box; names in colour and things like <span class="ph">number</span> are filled in by the game.</p>
+  <p class="intro">Every line of the English translation, as the latest patch has it, beside the game's Japanese. Spotted something wrong or awkward? Press <b>Suggest a change</b> beside the line: it opens a GitHub issue with your change filled in. <span class="page">▼</span> starts a new page of the text box; names in colour and things like <span class="ph">number</span> are filled in by the game.</p>
+  <div class="head" aria-hidden="true"><span>Line</span><span>Japanese</span><span>English</span><span></span></div>
   <div id="rows"></div>
 </main>
 
@@ -156,6 +161,7 @@ function issueUrl(r, suggested, reason) {
     title: `Translation tweak: ${r.key}`,
     line: r.key,
     area: areas[r.area].name,
+    japanese: toBox(r.ja),
     current: toBox(r.text),
     suggested: suggested,
     reason: reason,
@@ -163,7 +169,8 @@ function issueUrl(r, suggested, reason) {
   });
   let url = `${REPO}/issues/new?${params}`;
   if (url.length > MAX_URL) {           // too long for a link: leave the current text out, it's on the page
-    params.set("current", `(too long to fill in: see line ${r.key} on the translation page)`);
+    params.set("japanese", `(too long to fill in: see line ${r.key} on the translation page)`);
+    if (`${REPO}/issues/new?${params}`.length > MAX_URL) params.set("current", `(too long to fill in: see line ${r.key} on the translation page)`);
     url = `${REPO}/issues/new?${params}`;
   }
   return url;
@@ -196,19 +203,22 @@ function openForm(row, r, button) {
 function build(r) {
   const row = document.createElement("div");
   row.className = "row";
-  const id = document.createElement("div"), text = document.createElement("div"), button = document.createElement("button");
+  const id = document.createElement("div"), ja = document.createElement("div"), text = document.createElement("div"), button = document.createElement("button");
   id.className = "id"; id.textContent = r.key;
+  ja.className = "text ja"; ja.lang = "ja";
+  if (r.ja) render(ja, r.ja);
+  else { ja.lang = "en"; ja.classList.add("new"); ja.textContent = "A new line, added by the patch"; }
   text.className = "text"; render(text, r.text);
   button.className = "suggest"; button.type = "button"; button.textContent = "Suggest a change";
   button.setAttribute("aria-label", `Suggest a change to line ${r.key}`);
   button.onclick = () => openForm(row, r, button);
-  row.append(id, text, button);
+  row.append(id, ja, text, button);
   return row;
 }
 
 function draw() {
   const q = $("q").value.trim().toLowerCase();
-  const list = q ? rows.filter(r => (r.text + "\n" + r.key).toLowerCase().includes(q)) : rows.filter(r => r.area === area);
+  const list = q ? rows.filter(r => (r.text + "\n" + r.ja + "\n" + r.key).toLowerCase().includes(q)) : rows.filter(r => r.area === area);
   const host = $("rows");
   host.replaceChildren(...list.slice(0, LIMIT).map(build));
   if (!list.length) host.innerHTML = `<div class="empty">No lines match.</div>`;
@@ -236,7 +246,7 @@ async function start() {
     $("rows").innerHTML = `<div class="empty">Couldn't load the translation. Try again in a moment.</div>`;
     return;
   }
-  rows = areas.flatMap((a, i) => a.rows.map(([id, text]) => ({ area: i, key: `${a.bank}/${id}`, text })));
+  rows = areas.flatMap((a, i) => a.rows.map(([id, text, ja]) => ({ area: i, key: `${a.bank}/${id}`, text, ja: ja || "" })));
   areas.forEach((a, i) => {
     const b = document.createElement("button");
     b.type = "button"; b.setAttribute("role", "tab"); b.textContent = a.name;

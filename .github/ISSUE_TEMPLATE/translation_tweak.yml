@@ -1,6 +1,6 @@
 # Opened from the translation page (docs/translation.html), which fills in these fields through the
-# link: each field's id is its name in the link's query string (line, area, current, suggested,
-# reason, version).
+# link: each field's id is its name in the link's query string (line, area, japanese, current,
+# suggested, reason, version).
 name: Translation tweak
 description: Suggest a better wording for a line of the English text.
 title: "Translation tweak: "
@@ -23,6 +23,11 @@ body:
     attributes:
       label: Area
       description: Where in the game the line is.
+  - type: textarea
+    id: japanese
+    attributes:
+      label: Japanese
+      description: The game's original line.
   - type: textarea
     id: current
     attributes:
