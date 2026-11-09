@@ -32,7 +32,8 @@ OPT_BANK_KEPT = 14              # OPT_DATA+14: the message bank to restore after
 OPT_HELP = "Ⓧ: Info"
 OPT_HELP_AT = 44, 148            # its centre x and top y: the board's bottom left
 LOGO_MARK = 0x4C47             # GetTpTouch's argument when the title script asks about the logos
-OPT_LOAD_SITE = 0x02035874     # boot: the save header read, just before the backup unlock
+# The game's boot save check (its header read, then the backup unlock at 0x02035874) is left as it
+# is: reading the settings inside it made nds-bootstrap (TWiLight Menu++) hang after the logos.
 OPT_DRAW_SITE = 0x02066268     # the bag icons' draw, before the board
 OPT_FREE_SITE = 0x020661F8     # the bag icons' free, before the board
 TITLE_PAGE = 0x0206AFA0       # the title object's page setter
@@ -393,6 +394,7 @@ script_ask:                 @ GetTpTouch with one of our marks: the options and 
     beq ask_x
     b {CHEST_CODE:#x}       @ the map's chest count, the quiz's marks, or the plain touch read
 ask_logos:                  @ 1 when the opening logos should play
+    bl opt_load             @ the settings come from the save the first time this is asked
     ldr r1, ={OPT_DATA:#x}
     ldrb r1, [r1, #{OPT_LOGOS}]
     eor r1, r1, #1
@@ -444,12 +446,10 @@ cue_quiet:
     mov r0, #0
     bx lr
 
-opt_load:                   @ boot: read the settings while the game holds the backup lock
-    push {{r0, lr}}
-    ldr r0, ={OPT_SAVE_AT:#x}
-    ldr r1, ={OPT_DATA:#x}
-    mov r2, #{OPT_SIZE}
-    bl {BACKUP_READ:#x}
+opt_load:                   @ the settings, read when the title asks about the logos (once, at boot)
+    push {{r4, lr}}         @ a read of its own, taking and releasing the card as opt_save does
+    ldr r0, ={BACKUP_READ:#x}   @ (squeezed into the game's own boot read, it broke nds-bootstrap's)
+    bl opt_io               @ no lock to be had: the defaults stay
     ldr r1, ={OPT_DATA:#x}
     ldr r2, =counts
     mov r3, #0
@@ -463,26 +463,28 @@ load_next:                  @ unset bytes read 0xFF: anything out of range is th
     cmp r3, #{len(OPT_COUNTS)}
     blt load_next
     bl music_apply
-    pop {{r0, lr}}
-    b {BACKUP_UNLOCK_OBJ:#x}
+    pop {{r4, pc}}
 
 opt_save:
-    push {{r4, lr}}
+    ldr r0, ={BACKUP_WRITE:#x}
+opt_io:                     @ r0 BACKUP_READ or BACKUP_WRITE: the settings, with the card taken and released
+    push {{r4, r5, lr}}
+    mov r5, r0
     bl {LOCK_ID:#x}
     mov r4, r0
     cmn r0, #3
-    beq save_end
+    beq io_none
     bl {CARD_LOCK:#x}
     ldr r0, ={OPT_SAVE_AT:#x}
     ldr r1, ={OPT_DATA:#x}
     mov r2, #{OPT_SIZE}
-    bl {BACKUP_WRITE:#x}
+    blx r5
     mov r0, r4
     bl {CARD_UNLOCK:#x}
     mov r0, r4
     bl {LOCK_RELEASE:#x}
-save_end:
-    pop {{r4, pc}}
+io_none:
+    pop {{r4, r5, pc}}
 
 opt_draw:                   @ r7 the menu: the gear zooms in with the back button, to its left
     push {{r4, r5, r6, r8, lr}}

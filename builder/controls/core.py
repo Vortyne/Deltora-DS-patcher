@@ -882,7 +882,7 @@ strip_none:
     out[HUD_TAP_SITE + 4 - RAM:HUD_TAP_SITE + 8 - RAM] = entext.asm(f"bl {HUD_GUARD + 12:#x}", HUD_TAP_SITE + 4)
     out[BAG_DRAW_SITE - RAM:BAG_DRAW_SITE - RAM + 4] = entext.asm(f"bl {HUD_GUARD + 4:#x}", BAG_DRAW_SITE)
     out[BAG_TAP_SITE - RAM:BAG_TAP_SITE - RAM + 4] = entext.asm(f"bl {HUD_GUARD + 8:#x}", BAG_TAP_SITE)
-    for site, entry in ((OPT_LOAD_SITE, 0), (OPT_DRAW_SITE, 4), (OPT_FREE_SITE, 8), (STREAM_VOLUME_SITE, 32)) + tuple((s, 28) for s in BIO_CUE_SITES):
+    for site, entry in ((OPT_DRAW_SITE, 4), (OPT_FREE_SITE, 8), (STREAM_VOLUME_SITE, 32)) + tuple((s, 28) for s in BIO_CUE_SITES):
         out[site - RAM:site - RAM + 4] = entext.asm(f"bl {OPT_CODE + entry:#x}", site)
     struct.pack_into("<I", out, DIRECT_ENTRY - RAM, ANIM_CODE)
     struct.pack_into("<I", out, LOOP_ENTRY - RAM, ANIM_CODE + 4)

@@ -38,6 +38,10 @@ Nothing is uploaded.
 
 The patch itself, `Deltora_Quest_DS_english_patch_full_button_control_v<version>.bps`, is attached to the [latest release](https://github.com/Vortyne/Deltora-DS-patcher/releases/latest). It also works with any BPS patcher, such as Floating IPS.
 
+### Playing on a 3DS or DSi
+
+With TWiLight Menu++, the game may have minor visual issues, such as some item icons shown in the wrong colours.
+
 ## Building
 
 To build the ROM from source instead, you need:
