@@ -24,6 +24,21 @@ def u32(b, o):
     return struct.unpack_from("<I", b, o)[0]
 
 
+def set_banner_title(rom, title):
+    """The title the DS menu (and TWiLight Menu++ and the like) shows beside the icon: written into
+    every language's slot of the banner, as the original has its Japanese title in all of them.
+    rom is a bytearray; title has up to three lines, 127 characters."""
+    at = u32(rom, 0x68)
+    version = struct.unpack_from("<H", rom, at)[0]
+    assert version == 1, f"banner version {version:#x}"       # six titles and one CRC
+    text = title.encode("utf-16le")
+    assert len(text) < 0x100, title
+    for lang in range(6):
+        slot = at + 0x240 + lang * 0x100
+        rom[slot:slot + 0x100] = text.ljust(0x100, b"\0")
+    struct.pack_into("<H", rom, at + 2, crc16(rom[at + 0x20:at + 0x840]))
+
+
 def build(rom_in, replacements=None, arm9=None):
     """replacements: {lf2_id: bytes}. arm9: replacement ARM9, which may be larger."""
     rom = bytearray(rom_in)

@@ -16,6 +16,7 @@ from lf2 import read_lf2
 
 SRC = paths.ROM
 OUT = paths.OUT
+BANNER_TITLE = "Deltora Quest\nThe 7 Gems\nNamco Bandai Games"     # the DS menu's title, in every language
 OVERLAY2_RAM = 0x021F0760
 MIX_BACK = controls.MIX_BACK
 MIX_BACK_SRC = f"""
@@ -212,6 +213,7 @@ def main():
     for addr, line in MIX_PATCHES:
         out[base + addr:base + addr + 4] = entext.asm(line, addr)
     out[money:money + 4] = b"%d\0\0"     # English spaces are too wide to pad with
+    build_rom.set_banner_title(out, BANNER_TITLE)
     out = bytes(out)
     os.makedirs(os.path.dirname(OUT) or ".", exist_ok=True)
     open(OUT, "wb").write(out)
