@@ -17,9 +17,6 @@ SOUP_SITE, SOUP_END_SITE = 0x020A0FA4, 0x020A3354  # its timer (7) started; that
 INFO_FN = 0x02033824            # (message, bank, x, y): a message window; its handle at the screen's +0x64
 MSG_CLOSE = 0x0203379C          # a message window closed (push {r4, lr} first)
 SCRIPT_BYTES = 0x020C92B4       # the scripts' saved globals: their byte array (byte 0: the game cleared, set by the ending)
-MEM_SAVE_AT = 0x1F30            # between the options and the kill counts, untouched by the game
-HEAP_ALLOC_SITE, EXP_ALLOC = 0x020352F8, 0x0205008C    # in FUN_020352d8 (HEAP_ALLOC), every heap's allocation
-POOL1, POOL2 = 0x020D413C, 0x020D4164    # the main heap; the second, which our code block shrinks
 MESSAGE_CLOSE = 0x0203379C      # a message window's handle: closed, if it still is open
 TOUCH_TRIG = 0x02037758         # the touch's new-press flag (+3 of TOUCH_STATE)
 TOUCH_PICK, CAN_TARGET = 0x02096CD4, 0x02087800
@@ -833,8 +830,10 @@ strip_none:
     out[GOLD_DROP_SITE - RAM:GOLD_DROP_SITE - RAM + 4] = entext.asm(f"b {GOLD_DROP_SITE + 0x28:#x}", GOLD_DROP_SITE)
     at = SAVE_SHOWN_AT - RAM            # mov r8, #0 / 3 frame calls / add, cmp #90, blo: now until a press
     assert out[at:at + 4] == entext.asm("mov r8, #0", 0) and out[at + 24:at + 28] == entext.asm("cmp r8, #0x5a", 0)
-    out[at:at + 4] = entext.asm(f"bl {MEM_LOG + 4:#x}", SAVE_SHOWN_AT)   # the memory log, then CARDS_CODE + 8
-    out[HEAP_ALLOC_SITE - RAM:HEAP_ALLOC_SITE - RAM + 4] = entext.asm(f"bl {MEM_LOG:#x}", HEAP_ALLOC_SITE)    # writes the kill counts, then mvn r8, #0
+    out[at:at + 4] = entext.asm(f"bl {PT_CODE + 4:#x}", SAVE_SHOWN_AT)   # the play time, then the kill counts (CARDS_CODE + 8)
+    # No memory log any more: it hooked every heap allocation (0x020352F8) and walked the free list
+    # with the heap locked, and under nds-bootstrap (TWiLight Menu++) the delay left some menu icons
+    # without their palettes (magenta and cyan). Its 16 backup bytes at 0x1F30 are unused again.
     for site, was, entry in ((KILL_ROLL_SITE, DROP_ROLL, 0), (LOAD_RESULT_SITE, LOAD_RESULT, 4), (CARD_TEXT_SITE, CARD_TEXT, 12)):
         assert out[site - RAM:site - RAM + 4] == entext.asm(f"bl {was:#x}", site), hex(site)
         out[site - RAM:site - RAM + 4] = entext.asm(f"bl {CARDS_CODE + entry:#x}", site)
@@ -994,7 +993,6 @@ strip_none:
                             (PICK_CODE, PICK_ROOM, pick_src(var)),
                             (SCROLL_EDGE, SCROLL_EDGE_ROOM, scroll_edge_src()),
                             (CROP_CODE, CROP_ROOM, crop_src()),
-                            (MEM_LOG, MEM_LOG_ROOM, mem_log_src()),
                             (CARDS_CODE, CARDS_ROOM, cards),
                             (CARD_STRS, CARD_STRS_ROOM, card_strs_src()),
                             (HUD_GUARD, HUD_GUARD_ROOM, hud_guard_src(var)),

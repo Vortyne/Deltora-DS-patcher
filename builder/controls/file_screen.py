@@ -1,4 +1,4 @@
-"""The title's file screen: play time, completion and the Tower floor; the save's play time and memory log.
+"""The title's file screen: play time, completion and the Tower floor; the save's play time.
 
 Part of the controls namespace (see __init__.py): names from every part are shared."""
 
@@ -10,10 +10,7 @@ PT_MAX = 9999 * 3600 + 59 * 60 + 59    # 9999:59:59
 INFO_SHOW_SITES = (0x0206B53C, 0x0206B558, 0x0206B574)   # the file screen's info box for a file: messages 0x3D, 0x3E, chapter + 0xF
 TOWER_NAME_CODE, TOWER_NAME_ROOM = 0x02217B20, 0x40   # the title's file box: a Tower rest room's floor (to the 29th kilobyte's end)
 PT_X, PT_Y = 86, 98             # the time's centre x and top y: the black box's bottom right, under the chapter's lines
-# The memory log: the game's heap allocations, watched. Both heaps keep their lowest free total and
-# biggest free block; any heap's failed allocation is counted with its size. Each save merges them
-# into the backup at MEM_SAVE_AT (see mem_log_src).
-MEM_LOG, MEM_LOG_ROOM = 0x02216760, 0x180    # the 25th kilobyte; DEFER_TICK follows, then 256 bytes free at 0x02216A60
+# 0x02216760 (0x180 bytes, the 25th kilobyte) is free: the memory log was there. DEFER_TICK follows.
 LOAD_RESULT_SITE, LOAD_RESULT = 0x02048570, 0x0206AF98    # BuckupDataLoad: the save file screen's result
 BACKUP_UNLOCK_OBJ = 0x020356AC
 BACKUP_READ, BACKUP_WRITE = 0x02035598, 0x020358D0
@@ -22,117 +19,13 @@ CARD_LOCK, CARD_UNLOCK = 0x0200F7F4, 0x0200F804
 CARD_LOCKS = 0x020C7EA0      # the card's lock: +8 its owner's lock id, -3 (0xFFFFFFFD) when free
 
 
-def mem_log_src():
-    """+0 replaces FUN_020352d8's call to the heap's own allocation (r6 the heap, r5 the size,
-    which it keeps); +4 at the save point's message, before the kill counts are written.
-    The record, also the backup's 16 bytes at MEM_SAVE_AT: halfwords, in KB, of pool 1's lowest
-    free total and lowest biggest free block, then pool 2's (0xFFFF: never seen); a word of
-    failed allocations (in RAM since the last save); a word, the last failure's size."""
-    return f"""
-    b alloc
-    b save
-rec:
-.short -1, -1, -1, -1
-.word 0, 0
-alloc:
-    push {{r4, r7, r8, lr}}
-    bl {EXP_ALLOC:#x}
-    adr r3, rec
-    cmp r0, #0
-    ldreq r1, [r3, #8]
-    addeq r1, r1, #1
-    streq r1, [r3, #8]
-    streq r5, [r3, #12]
-    popeq {{r4, r7, r8, pc}}
-    ldr r1, ={POOL1:#x}
-    cmp r6, r1
-    beq pool
-    add r3, r3, #4
-    ldr r1, ={POOL2:#x}
-    cmp r6, r1
-    popne {{r4, r7, r8, pc}}
-pool:
-    ldr r1, [r6, #0x1C]
-    ldr r1, [r1, #0x24]     @ the free blocks: size at +4, next at +12
-    mov r2, #0
-    mov r12, #0
-walk:
-    cmp r1, #0
-    beq walked
-    ldr r4, [r1, #4]
-    add r2, r2, r4
-    cmp r4, r12
-    movhi r12, r4
-    ldr r1, [r1, #12]
-    b walk
-walked:
-    lsr r2, r2, #10
-    lsr r12, r12, #10
-    ldrh r4, [r3]
-    cmp r2, r4
-    strhlo r2, [r3]
-    ldrh r4, [r3, #2]
-    cmp r12, r4
-    strhlo r12, [r3, #2]
-    pop {{r4, r7, r8, pc}}
-
-save:                       @ the backup's record merged with this session's, then written
-    push {{r4, r5, lr}}
-    sub sp, sp, #20
-    bl {LOCK_ID:#x}
-    mov r4, r0
-    cmn r0, #3
-    beq saved
-    bl {CARD_LOCK:#x}
-    ldr r0, ={MEM_SAVE_AT:#x}
-    mov r1, sp
-    mov r2, #16
-    bl {BACKUP_READ:#x}
-    adr r5, rec
-    mov r2, #0
-lows:
-    ldrh r0, [sp, r2]
-    ldrh r1, [r5, r2]
-    cmp r1, r0
-    strhlo r1, [sp, r2]
-    add r2, r2, #2
-    cmp r2, #8
-    blo lows
-    ldr r0, [sp, #8]
-    cmn r0, #1
-    moveq r0, #0
-    ldr r1, [r5, #8]
-    add r0, r0, r1
-    str r0, [sp, #8]
-    cmp r1, #0              @ a failure this session: its size, else the old one
-    ldrne r0, [r5, #12]
-    strne r0, [sp, #12]
-    mov r0, #0
-    str r0, [r5, #8]
-    ldr r0, ={MEM_SAVE_AT:#x}
-    mov r1, sp
-    mov r2, #16
-    bl {BACKUP_WRITE:#x}
-    mov r0, r4
-    bl {CARD_UNLOCK:#x}
-    mov r0, r4
-    bl {LOCK_RELEASE:#x}
-saved:
-    add sp, sp, #20
-    pop {{r4, r5, lr}}
-    b {PT_CODE + 4:#x}      @ the play time, then the kill counts (CARDS_CODE + 8)
-
-.ltorg
-"""
-
-
 def pt_src():
     """Play time. The game kept none. A file's time is the frames counted by NitroSDK's vertical
     blank count (real time, whatever the game's frame rate), kept as 4 bytes at PT_SAVE_AT:
     +0 load: as the file screen's result is taken (with the kill counts, CARDS_CODE + 4), a new
        game starts from 0 and a loaded file from its saved time (0xFFFFFFFF, saved before this:
        from 0); from then the time is that plus the blanks since. Nothing counts before a game.
-    +4 save: when a save goes through (from MEM_LOG, then the kill counts), the time is written.
+    +4 save: when a save goes through (then the kill counts), the time is written.
     +8 show: the title's file screen draws a file's box (INFO_FN, its 3 calls for a file):
        h:mm:ss at its bottom right, from the saved time (none if never saved with one), at most
        9999:59:59. +12 close: closing a message window (MSG_CLOSE) takes the time down with its box."""
@@ -172,7 +65,7 @@ pt_loaded:
     mov r0, r4
     pop {{r4, r5, pc}}
 
-pt_save:                    @ from MEM_LOG's save record: lr the caller's; then the kill counts
+pt_save:                    @ at the save point's message: lr the caller's; then the kill counts
     push {{r4, lr}}
     ldr r4, =pt_data
     ldr r0, [r4, #8]
