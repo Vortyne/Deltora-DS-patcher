@@ -64,10 +64,11 @@ The English ROM is written to `out/Deltora_Quest_DS_english_patch_full_button_co
 ### Releasing a version
 
 1. Set the version in `version_number.txt`, for example `1.0`. It's shown on the title screen as "English patch v1.0", and it names the patch.
-2. Run `python build.py path/to/baserom.nds --bps`. This writes the ROM and `out/Deltora_Quest_DS_english_patch_full_button_control_v1.0.bps`, after checking that the patch rebuilds the ROM exactly.
-3. Publish a GitHub release tagged `v1.0`, with that `.bps` attached.
+2. Run `python release.py path/to/baserom.nds`. It builds the ROM into `out/` and writes the patch, `docs/Deltora_Quest_DS_english_patch_full_button_control_v1.0.bps`, after checking that the patch rebuilds the ROM exactly. It removes any older version's patch from `docs/`. With the ROM under its standard name, `Deltora Quest - Nanatsu no Houseki (Japan).nds`, next to `release.py`, the path can be left out.
+3. Commit and push the patch in `docs/`. It's the only release file kept in the repository: the web patcher needs it on its own site.
+4. Publish a GitHub release tagged `v1.0`, with the same `.bps` attached.
 
-Publishing the release runs `.github/workflows/pages.yml`. It deploys the web patcher from `docs/`, together with `version_number.txt` and the patch copied from the release, so the page downloads the patch from its own site.
+Pushing the patch runs `.github/workflows/pages.yml`, which deploys the web patcher from `docs/` together with `version_number.txt`. The page downloads the patch from its own site, since browsers can't download GitHub release files directly.
 
 The site's [translation page](https://vortyne.github.io/Deltora-DS-patcher/translation.html) shows every English line, and its **Suggest a change** button opens a filled-in *Translation tweak* issue. Its text is made by `tools/export_translation.py` from `translation/` at each deploy, and any push that changes `translation/` deploys again, so the page always matches the patch. It shows only the English: the game's Japanese script isn't published.
 

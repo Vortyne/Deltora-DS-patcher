@@ -1,11 +1,12 @@
-# The web patcher on GitHub Pages: docs/, plus the patch from the release that version_number.txt
-# names (tag v<version>), copied in so the page can download it from its own site, and the
-# translation page's text, made from translation/ so it always matches the patch's.
+# The web patcher on GitHub Pages: docs/, which holds the patch release.py puts there (so the page
+# downloads it from its own site), plus version_number.txt and the translation page's text, made
+# from translation/ so it always matches the patch's.
+#
+# It runs on pushes to main only. A release's run would be on its tag, which the github-pages
+# environment refuses ("Tag v1.0 is not allowed to deploy"), and pushing the patch deploys it.
 name: Deploy the web patcher
 
 on:
-  release:
-    types: [published]
   push:
     branches: [main]
     paths:
@@ -35,8 +36,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Assemble the site
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           version="$(tr -d '[:space:]' < version_number.txt)"
           patch="Deltora_Quest_DS_english_patch_full_button_control_v${version}.bps"
@@ -44,9 +43,7 @@ jobs:
           cp -r docs/. site/
           cp version_number.txt site/
           python3 tools/export_translation.py site/translation.json
-          # before v<version> is released, deploy the rest anyway: publishing the release runs this again
-          gh release download "v${version}" --repo "${GITHUB_REPOSITORY}" --pattern "${patch}" --dir site \
-            || echo "::warning::No ${patch} in a v${version} release yet: the patcher can't patch until it's published"
+          [ -f "site/${patch}" ] || echo "::warning::No docs/${patch}: run release.py and commit it, or the patcher can't patch"
           ls -l site
 
       - uses: actions/configure-pages@v5
