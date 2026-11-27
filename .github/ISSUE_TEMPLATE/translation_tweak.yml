@@ -49,4 +49,4 @@ body:
     id: version
     attributes:
       label: Patch version
-      placeholder: "1.0"
+      placeholder: "1.1"

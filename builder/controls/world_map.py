@@ -724,7 +724,7 @@ def patch_map_chests(b):
     up, go, start = names.index("UpScrSet"), names.index("MapGo"), names.index("StartScript")
     for f, new in ((up, b"UpScrBase"), (start, b"MapBase")):
         b[funcs[f] + 0x20:funcs[f] + 0x30] = new.ljust(16, b"\0")
-    ix = script_add(b, imports=(("GetTpTouch", 1), ("MessageIC", 4), ("DeleteMessage", 1)))
+    ix = script_add(b, imports=(("GetTpTouch", 1), ("MessageIC", 4), ("DeleteMessage", 1), ("CallShop", 1)))
     handle = CHEST_VAR
     drop = (*handle, 0x4000, 0, 0x0E, 0x101, 0x4001, 8, 0x103,     # shown: taken down
             *handle, 0x2102, ix["DeleteMessage"], 0xA000, *handle, 0x4000, 0, 0x14, 0xA000)
@@ -757,15 +757,24 @@ def patch_map_chests(b):
     begin = (*handle, 0x4000, 0, 0x14, 0xA000, *COMP_VAR, 0x4000, 0, 0x14, 0xA000,   # forget old handles
              0x4000, 0, 0x2002, ix["CompShow"], 0xA000,
              0x601A, 0, 0x601A, 1, 0x2002, start, 0x108)
-    around = lambda f: cdrop + (0x601A, 0, 0x2002, f, 0xA000, 0x4000, 0, 0x2002, ix["CompShow"], 0xA000, 0x4000, 0, 0x108)
+    around = lambda f, first=cdrop: first + (0x601A, 0, 0x2002, f, 0xA000, 0x4000, 0, 0x2002, ix["CompShow"], 0xA000, 0x4000, 0, 0x108)
+    # the shop and the tent take the screens: the chests count goes too. "Go to ...?" keeps it: No
+    # comes back to the same spot. Clearing chapter 1 sends Lief straight into Tom's shop from the
+    # map's own start (a CallShop of its own, not ShopIn): ShopTour, so "Chests Remaining" doesn't
+    # stay over Tom
+    tour = drop + cdrop + (0x601A, 0, 0x2102, ix["CallShop"], 0xA000, 0x4000, 0, 0x108)
     ix.update(script_add(b, funcs=(("UpScrSet", 1, code), ("MapGoChests", 1, mapgo), ("StartScript", 2, begin),
-                                   ("ShopComp", 1, around(shop)), ("TentComp", 1, around(tent)),
-                                   ("AskComp", 1, around(ask)))))
+                                   ("ShopComp", 1, around(shop, drop + cdrop)), ("TentComp", 1, around(tent, drop + cdrop)),
+                                   ("AskComp", 1, around(ask)), ("ShopTour", 1, tour))))
     funcs, _ = scr.recs(b)
+    calls = [a for a, x in scr.walk(b, scr.rec(b, funcs[start]))
+             if x[0] == "call" and x[1] == 0x2102 and x[2] == ix["CallShop"]]
+    assert len(calls) == 1, calls          # MapBase's shop tour
+    struct.pack_into("<2H", b, calls[0], 0x2002, ix["ShopTour"])
     new = {up: ix["UpScrSet"], go: ix["MapGoChests"], shop: ix["ShopComp"], tent: ix["TentComp"], ask: ix["AskComp"]}
     n = 0
     for f in range(len(funcs)):
-        if f in (ix["UpScrSet"], ix["MapGoChests"], ix["StartScript"], ix["ShopComp"], ix["TentComp"], ix["AskComp"]):
+        if f in (ix["UpScrSet"], ix["MapGoChests"], ix["StartScript"], ix["ShopComp"], ix["TentComp"], ix["AskComp"], ix["ShopTour"]):
             continue
         r = scr.rec(b, funcs[f])
         for a, x in scr.walk(b, r):

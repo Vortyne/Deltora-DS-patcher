@@ -45,8 +45,8 @@ body:
     id: version
     attributes:
       label: Patch version
-      description: Shown at the bottom left of the title screen, such as "English patch v1.0".
-      placeholder: "1.0"
+      description: Shown at the bottom left of the title screen, such as "English patch v1.1".
+      placeholder: "1.1"
     validations:
       required: true
   - type: dropdown
